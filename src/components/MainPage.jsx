@@ -17,7 +17,7 @@ import { Input } from './ui/input'
 import { DropdownMenu, DropdownMenuTrigger , DropdownMenuContent, DropdownMenuLabel , DropdownMenuItem, DropdownMenuSeparator } from './ui/dropdown-menu'
 import { Table , TableBody , TableHeader , TableRow ,TableHead , TableCell } from './ui/table'
 import { Badge } from './ui/badge'
-import { Avatar, AvatarFallback , AvatarImage } from '@radix-ui/react-avatar'
+import { Avatar, AvatarFallback , AvatarImage } from '@/components/ui/avatar'
 import {
   ChartContainer,
   ChartTooltip,
@@ -187,13 +187,19 @@ const MainPage = () => {
               <CardTitle className="text-sm font-medium">
                 Total Revenue
               </CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
+            <CardContent className="grid grid-cols-[1fr_auto] items-center">
+              <div>
               <div className="text-2xl font-bold">$45,231.89</div>
               <p className="text-xs text-muted-foreground">
                 +20.1% from last month
               </p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold float-right pr-2">+22%</p>
+                <svg width={100} height={20} className="magicpattern">
+                </svg>
+              </div>
             </CardContent>
           </Card>
 
