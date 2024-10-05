@@ -14,17 +14,19 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/customers" element={<Customers />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/promotions" element={<Promotions />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/owner" element={<Owner />} />
-      </Routes>
+      <main className="w-[calc(100%-112px)] ml-auto pl-2">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/customers" element={<Customers />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/promotions" element={<Promotions />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/owner" element={<Owner />} />
+        </Routes>
+      </main>
     </>
   );
 }
