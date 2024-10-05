@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="lg:w-[calc(100%-112px)] w-full ml-auto pl-2">
+      <main className="lg:w-[calc(100%-96px)] w-full ml-auto pl-2">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
