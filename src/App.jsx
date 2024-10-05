@@ -1,11 +1,5 @@
-import MainPage from "./components/MainPage";
-
 function App() {
-  return (
-    <>
-    <MainPage />
-    </>
-  )
+  return <></>;
 }
 
 export default App;
