@@ -197,7 +197,7 @@ const MainPage = () => {
               </div>
               <div>
                 <p className="text-orange-500 font-bold float-right pr-2">+22%</p>
-                <svg width={100} height={20} className="magicpattern">
+                <svg width={100} height={20} className="magicpattern1">
                 </svg>
               </div>
             </CardContent>
@@ -210,11 +210,18 @@ const MainPage = () => {
               </CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
+            <CardContent className="grid grid-cols-[1fr_auto] items-center">
+              <div>
               <div className="text-2xl font-bold">+2350</div>
               <p className="text-xs text-muted-foreground">
-                +180.1% from last month
+              +180.1% from last month
               </p>
+              </div>
+              <div>
+                <p className="text-orange-500 font-bold float-right pr-2">+22%</p>
+                <svg width={100} height={20} className="magicpattern2">
+                </svg>
+              </div>
             </CardContent>
           </Card>
 
