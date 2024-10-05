@@ -19,51 +19,72 @@ import { Table , TableBody , TableHeader , TableRow ,TableHead , TableCell } fro
 import { Badge } from './ui/badge'
 import { Avatar, AvatarFallback , AvatarImage } from '@radix-ui/react-avatar'
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-import ChartConfigComponent from "./ChartConfig"
 
 const chartData = [
-  { date: "2024-04-01", Revenu: 222, Expens: 150 },
-  { date: "2024-04-02", Revenu: 97, Expens: 180 },
-  { date: "2024-04-03", Revenu: 167, Expens: 120 },
-  { date: "2024-04-04", Revenu: 242, Expens: 260 },
-  { date: "2024-04-05", Revenu: 373, Expens: 290 },
-  { date: "2024-04-06", Revenu: 301, Expens: 340 },
-  { date: "2024-04-07", Revenu: 245, Expens: 180 },
-  { date: "2024-04-08", Revenu: 409, Expens: 320 },
-  { date: "2024-04-09", Revenu: 59, Expens: 110 },
-  { date: "2024-04-10", Revenu: 261, Expens: 190 },
-  { date: "2024-04-11", Revenu: 327, Expens: 350 },
-  { date: "2024-04-12", Revenu: 292, Expens: 210 },
-  { date: "2024-04-13", Revenu: 342, Expens: 380 },
-  { date: "2024-04-14", Revenu: 137, Expens: 220 },
-  { date: "2024-04-15", Revenu: 120, Expens: 170 },
-  { date: "2024-04-16", Revenu: 138, Expens: 190 },
-  { date: "2024-04-17", Revenu: 446, Expens: 360 },
-  { date: "2024-04-18", Revenu: 364, Expens: 410 },
-  { date: "2024-04-19", Revenu: 243, Expens: 180 },
-  { date: "2024-04-20", Revenu: 89, Expens: 150 },
-  { date: "2024-04-21", Revenu: 137, Expens: 200 },
-  { date: "2024-04-22", Revenu: 224, Expens: 170 },
-  { date: "2024-04-23", Revenu: 138, Expens: 230 },
-  { date: "2024-04-24", Revenu: 387, Expens: 290 },
-  { date: "2024-04-25", Revenu: 215, Expens: 250 },
-  { date: "2024-04-26", Revenu: 75, Expens: 130 },
-  { date: "2024-04-27", Revenu: 383, Expens: 420 },
-  { date: "2024-04-28", Revenu: 122, Expens: 180 },
-  { date: "2024-04-29", Revenu: 315, Expens: 240 },
-  { date: "2024-04-30", Revenu: 454, Expens: 380 },
-]
+  { date: "2024-09-01", revenue: 4500, expenses: 1200 },
+  { date: "2024-09-02", revenue: 5000, expenses: 1800 },
+  { date: "2024-09-03", revenue: 5200, expenses: 1500 },
+  { date: "2024-09-04", revenue: 4800, expenses: 1600 },
+  { date: "2024-09-05", revenue: 5300, expenses: 1400 },
+  { date: "2024-09-06", revenue: 6000, expenses: 1700 },
+  { date: "2024-09-07", revenue: 5700, expenses: 1900 },
+  { date: "2024-09-08", revenue: 6200, expenses: 2000 },
+  { date: "2024-09-09", revenue: 4900, expenses: 1700 },
+  { date: "2024-09-10", revenue: 5200, expenses: 1600 },
+  { date: "2024-09-11", revenue: 6100, expenses: 1900 },
+  { date: "2024-09-12", revenue: 5800, expenses: 2000 },
+  { date: "2024-09-13", revenue: 6300, expenses: 1800 },
+  { date: "2024-09-14", revenue: 4700, expenses: 1600 },
+  { date: "2024-09-15", revenue: 5500, expenses: 2100 },
+  { date: "2024-09-16", revenue: 5100, expenses: 1700 },
+  { date: "2024-09-17", revenue: 5600, expenses: 1900 },
+  { date: "2024-09-18", revenue: 5900, expenses: 2000 },
+  { date: "2024-09-19", revenue: 4700, expenses: 1600 },
+  { date: "2024-09-20", revenue: 5300, expenses: 1800 },
+  { date: "2024-09-21", revenue: 5800, expenses: 1900 },
+  { date: "2024-09-22", revenue: 6200, expenses: 2200 },
+  { date: "2024-09-23", revenue: 4900, expenses: 1600 },
+  { date: "2024-09-24", revenue: 5100, expenses: 1700 },
+  { date: "2024-09-25", revenue: 6000, expenses: 2100 },
+  { date: "2024-09-26", revenue: 5700, expenses: 1800 },
+  { date: "2024-09-27", revenue: 6400, expenses: 1900 },
+  { date: "2024-09-28", revenue: 5200, expenses: 1700 },
+  { date: "2024-09-29", revenue: 5000, expenses: 1500 },
+  { date: "2024-09-30", revenue: 5900, expenses: 1800 },
+];
+
+
+const chartConfig = {
+  revenue: {
+    label: "Revenue",
+    color: "hsl(var(--chart-1))",
+  },
+  expenses: {
+    label: "Expenses",
+    color: "hsl(var(--chart-2))",
+  },
+};
+
 
 
 
 
 const MainPage = () => {
+  const [activeChart, setActiveChart] = React.useState("revenue");
+
+  const total = React.useMemo(() => {
+    return {
+      revenue: chartData.reduce((acc, curr) => acc + curr.revenue, 0),
+      expenses: chartData.reduce((acc, curr) => acc + curr.expenses, 0),
+    };
+  }, []);
+
+
   return (
     <>
       <div className="flex w-full flex-col">
@@ -221,23 +242,84 @@ const MainPage = () => {
           <Card
             className="xl:col-span-2" x-chunk="dashboard-01-chunk-4"
           >
-            <CardHeader className="flex flex-row items-center">
+            <CardHeader className="flex flex-row items-center justify-center gap-4">
               <div className="grid gap-2">
                 <CardTitle>Sales Statistic</CardTitle>
                 <CardDescription>
-                  Recent statistic from your store.
+                Revenue vs. Expenses - 30 Days
                 </CardDescription>
               </div>
-              <Button asChild size="sm" className="ml-auto gap-1">
+              
+        <div className="flex">
+          {["revenue", "expenses"].map((key) => (
+            <button
+              key={key}
+              data-active={activeChart === key}
+              className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
+              onClick={() => setActiveChart(key)}
+            >
+              <span className="text-xs text-muted-foreground">
+                {chartConfig[key].label}
+              </span>
+              <span className="text-lg font-bold leading-none sm:text-3xl">
+                {total[key].toLocaleString()}
+              </span>
+            </button>
+          ))}
+        </div>
+        <Button asChild size="sm" className="ml-auto gap-1">
                 <a href="#">
                   Advanced Report
                   <ArrowUpRight className="h-4 w-4" />
                 </a>
               </Button>
             </CardHeader>
-            <CardContent>
-              
-            </CardContent>
+            <CardContent className="px-2 sm:p-6">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[250px] w-full"
+        >
+          <BarChart
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              minTickGap={32}
+              tickFormatter={(value) => {
+                const date = new Date(value);
+                return date.toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                });
+              }}
+            />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent
+                  className="w-[150px]"
+                  nameKey="views"
+                  labelFormatter={(value) => {
+                    return new Date(value).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    });
+                  }}
+                />
+              }
+            />
+            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
