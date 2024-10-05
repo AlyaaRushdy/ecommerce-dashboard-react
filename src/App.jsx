@@ -1,7 +1,7 @@
 import Navbar from "./components/shared/Navbar";
 
 function App() {
-  return <><Navbar /></>;
+  return <></>;
 }
 
 export default App;
