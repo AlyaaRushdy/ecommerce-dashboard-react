@@ -14,11 +14,15 @@ import {
   CircleUser,
 } from "lucide-react";
 import NavItem from "../NavItem";
+import { ScrollArea } from "../ui/scroll-area";
 
 function Sidebar() {
   return (
     <>
-      <aside className="w-0 sm:w-24 md:w-28 bg-primary h-screen fixed left-0">
+      <ScrollArea
+        className="w-0 sm:w-24 md:w-28 bg-primary h-screen fixed left-0 pb-2"
+        style={{ position: "fixed" }}
+      >
         <NavigationMenu className="mx-auto pt-4" orientation="vertical">
           <NavigationMenuList className="flex-col gap-4">
             <NavItem link={"/"} tooltipText={"Dashboard"}>
@@ -50,7 +54,7 @@ function Sidebar() {
             </NavItem>
           </NavigationMenuList>
         </NavigationMenu>
-      </aside>
+      </ScrollArea>
     </>
   );
 }
