@@ -1,6 +1,6 @@
-"use client"
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+"use client";
+import * as React from "react";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -8,23 +8,45 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent , SheetTrigger } from '@/components/ui/sheet'
-import { DollarSign , Users , CreditCard , Activity , Package , Package2 , Menu , ArrowUpRight } from 'lucide-react'
-import { Search , CircleUser } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { DropdownMenu, DropdownMenuTrigger , DropdownMenuContent, DropdownMenuLabel , DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
-import { Table , TableBody , TableHeader , TableRow ,TableHead , TableCell } from '@/components/ui/table'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback , AvatarImage } from '@/components/ui/avatar'
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DollarSign,
+  Users,
+  CreditCard,
+  Activity,
+  Package,
+  Package2,
+  Menu,
+  ArrowUpRight,
+} from "lucide-react";
+import { Search, CircleUser } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
-import ModeToggle from "@/components/modeToggle"
-
+} from "@/components/ui/chart";
+import ModeToggle from "@/components/shared/modeToggle";
 
 const chartData = [
   { date: "2024-09-01", revenue: 4500, expenses: 1200 },
@@ -59,7 +81,6 @@ const chartData = [
   { date: "2024-09-30", revenue: 5900, expenses: 1800 },
 ];
 
-
 const chartConfig = {
   revenue: {
     label: "Revenue",
@@ -71,9 +92,6 @@ const chartConfig = {
   },
 };
 
-
-
-
 function Home() {
   const [activeChart, setActiveChart] = React.useState("revenue");
 
@@ -84,107 +102,138 @@ function Home() {
     };
   }, []);
 
-
   return (
     <>
       <div className="flex w-full flex-col">
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
           <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-            <a href="#" className='flex items-center gap-2 text-lg font-semibold md:text-base'>
-              <Package className='h-6 w-6' />
-              <span className='sr-only'>Brand Name</span>
+            <a
+              href="#"
+              className="flex items-center gap-2 text-lg font-semibold md:text-base"
+            >
+              <Package className="h-6 w-6" />
+              <span className="sr-only">Brand Name</span>
             </a>
-            <a href="#" className='text-foreground transition-colors hover:text-foreground'>Dashboard</a>
-            <a href="#" className='text-muted-foreground transition-colors hover:text-foreground'>Orders</a>
-            <a href="#" className='text-muted-foreground transition-colors hover:text-foreground'>Products</a>
-            <a href="#" className='text-muted-foreground transition-colors hover:text-foreground'>Customers</a>
-            <a href="#" className='text-muted-foreground transition-colors hover:text-foreground'>Analytics</a>
+            <a
+              href="#"
+              className="text-foreground transition-colors hover:text-foreground"
+            >
+              Dashboard
+            </a>
+            <a
+              href="#"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Orders
+            </a>
+            <a
+              href="#"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Products
+            </a>
+            <a
+              href="#"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Customers
+            </a>
+            <a
+              href="#"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Analytics
+            </a>
           </nav>
 
           <Sheet>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="shrink-0 md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle navigation menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left">
-            <nav className="grid gap-6 text-lg font-medium">
-              <a
-                href="#"
-                className="flex items-center gap-2 text-lg font-semibold"
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
               >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
-              </a>
-              <a href="#" className="hover:text-foreground">
-                Dashboard
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Orders
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Products
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Customers
-              </a>
-              <a
-                href="#"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Analytics
-              </a>
-            </nav>
-          </SheetContent>
-        </Sheet>
-        <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <form className="ml-auto flex-1 sm:flex-initial">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-              />
-            </div>
-          </form>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <div>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <nav className="grid gap-6 text-lg font-medium">
+                <a
+                  href="#"
+                  className="flex items-center gap-2 text-lg font-semibold"
+                >
+                  <Package2 className="h-6 w-6" />
+                  <span className="sr-only">Acme Inc</span>
+                </a>
+                <a href="#" className="hover:text-foreground">
+                  Dashboard
+                </a>
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Orders
+                </a>
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Products
+                </a>
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Customers
+                </a>
+                <a
+                  href="#"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  Analytics
+                </a>
+              </nav>
+            </SheetContent>
+          </Sheet>
+          <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+            <form className="ml-auto flex-1 sm:flex-initial">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="search"
+                  placeholder="Search products..."
+                  className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+                />
+              </div>
+            </form>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Settings</DropdownMenuItem>
+                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Logout</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <div>
               <ModeToggle />
             </div>
-        </div>
-      </header>
+          </div>
+        </header>
       </div>
-      <main className='flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8'>
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           <Card x-chunk="dashboard-01-chunk-0">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -194,15 +243,16 @@ function Home() {
             </CardHeader>
             <CardContent className="grid grid-cols-[1fr_auto] items-center">
               <div>
-              <div className="text-2xl font-bold">$45,231.89</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
+                <div className="text-2xl font-bold">$45,231.89</div>
+                <p className="text-xs text-muted-foreground">
+                  +20.1% from last month
+                </p>
               </div>
               <div>
-                <p className="text-orange-500 font-bold float-right pr-2">+22%</p>
-                <svg width={100} height={20} className="magicpattern1">
-                </svg>
+                <p className="text-orange-500 font-bold float-right pr-2">
+                  +22%
+                </p>
+                <svg width={100} height={20} className="magicpattern1"></svg>
               </div>
             </CardContent>
           </Card>
@@ -212,19 +262,17 @@ function Home() {
               <CardTitle className="text-sm font-medium">
                 Subscriptions
               </CardTitle>
-  
             </CardHeader>
             <CardContent className="grid grid-cols-[1fr_auto] items-center">
               <div>
-              <div className="text-2xl font-bold">+2350</div>
-              <p className="text-xs text-muted-foreground">
-              -15% from last month
-              </p>
+                <div className="text-2xl font-bold">+2350</div>
+                <p className="text-xs text-muted-foreground">
+                  -15% from last month
+                </p>
               </div>
               <div>
                 <p className="text-red-500 font-bold float-right pr-2">-15%</p>
-                <svg width={100} height={20} className="magicpattern2">
-                </svg>
+                <svg width={100} height={20} className="magicpattern2"></svg>
               </div>
             </CardContent>
           </Card>
@@ -232,77 +280,71 @@ function Home() {
           <Card x-chunk="dashboard-01-chunk-2">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Sales</CardTitle>
-            
             </CardHeader>
-              
+
             <CardContent className="grid grid-cols-[1fr_auto] items-center">
               <div>
-              <div className="text-2xl font-bold">+12,234</div>
-              <p className="text-xs text-muted-foreground">
-              +19% from last month
-              </p>
+                <div className="text-2xl font-bold">+12,234</div>
+                <p className="text-xs text-muted-foreground">
+                  +19% from last month
+                </p>
               </div>
               <div>
-                <p className="text-orange-500 font-bold float-right pr-2">+19%</p>
-                <svg width={100} height={20} className="magicpattern1">
-                </svg>
+                <p className="text-orange-500 font-bold float-right pr-2">
+                  +19%
+                </p>
+                <svg width={100} height={20} className="magicpattern1"></svg>
               </div>
             </CardContent>
-        
           </Card>
 
           <Card x-chunk="dashboard-01-chunk-3">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Now</CardTitle>
-            
             </CardHeader>
-        
+
             <CardContent className="grid grid-cols-[1fr_auto] items-center">
               <div>
-              <div className="text-2xl font-bold">+573</div>
-              <p className="text-xs text-muted-foreground">
-              -201 since last hour
-              </p>
+                <div className="text-2xl font-bold">+573</div>
+                <p className="text-xs text-muted-foreground">
+                  -201 since last hour
+                </p>
               </div>
               <div>
                 <p className="text-red-500 font-bold float-right pr-2">-10%</p>
-                <svg width={100} height={20} className="magicpattern2">
-                </svg>
+                <svg width={100} height={20} className="magicpattern2"></svg>
               </div>
             </CardContent>
-          
           </Card>
-      </div>
-      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-          <Card
-            className="xl:col-span-2" x-chunk="dashboard-01-chunk-4"
-          >
+        </div>
+        <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center justify-center gap-4">
               <div className="grid gap-2">
                 <CardTitle>Sales Statistic</CardTitle>
                 <CardDescription>
-                Revenue vs. Expenses - 30 Days
+                  Revenue vs. Expenses - 30 Days
                 </CardDescription>
               </div>
-              
-        <div className="flex">
-          {["revenue", "expenses"].map((key) => (
-            <button
-              key={key}
-              data-active={activeChart === key}
-              className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
-              onClick={() => setActiveChart(key)}
-            >
-              <span className="text-xs text-muted-foreground">
-                {chartConfig[key].label}
-              </span>
-              <span className="text-lg font-bold leading-none sm:text-3xl">
-                {total[key].toLocaleString()}
-              </span>
-            </button>
-          ))}
-        </div>
-        <Button asChild size="sm" className="ml-auto gap-1">
+
+              <div className="flex">
+                {["revenue", "expenses"].map((key) => (
+                  <button
+                    key={key}
+                    data-active={activeChart === key}
+                    className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
+                    onClick={() => setActiveChart(key)}
+                  >
+                    <span className="text-xs text-muted-foreground">
+                      {chartConfig[key].label}
+                    </span>
+                    <span className="text-lg font-bold leading-none sm:text-3xl">
+                      {total[key].toLocaleString()}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <Button asChild size="sm" className="ml-auto gap-1">
                 <a href="#">
                   Advanced Report
                   <ArrowUpRight className="h-4 w-4" />
@@ -310,51 +352,54 @@ function Home() {
               </Button>
             </CardHeader>
             <CardContent className="px-2 sm:p-6">
-        <ChartContainer
-          config={chartConfig}
-          className="aspect-auto h-[250px] w-full"
-        >
-          <BarChart
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              minTickGap={32}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                });
-              }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="views"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    });
+              <ChartContainer
+                config={chartConfig}
+                className="aspect-auto h-[250px] w-full"
+              >
+                <BarChart
+                  data={chartData}
+                  margin={{
+                    left: 12,
+                    right: 12,
                   }}
-                />
-              }
-            />
-            <Bar dataKey={activeChart} fill={`var(--color-${activeChart})`} />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
+                >
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey="date"
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={8}
+                    minTickGap={32}
+                    tickFormatter={(value) => {
+                      const date = new Date(value);
+                      return date.toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      });
+                    }}
+                  />
+                  <ChartTooltip
+                    content={
+                      <ChartTooltipContent
+                        className="w-[150px]"
+                        nameKey="views"
+                        labelFormatter={(value) => {
+                          return new Date(value).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          });
+                        }}
+                      />
+                    }
+                  />
+                  <Bar
+                    dataKey={activeChart}
+                    fill={`var(--color-${activeChart})`}
+                  />
+                </BarChart>
+              </ChartContainer>
+            </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
@@ -438,10 +483,9 @@ function Home() {
               </div>
             </CardContent>
           </Card>
-          </div>
-      
-    </main>
+        </div>
+      </main>
     </>
-  )
+  );
 }
 export default Home;
