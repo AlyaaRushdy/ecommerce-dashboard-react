@@ -11,7 +11,6 @@ import {
   TrendingUp,
   Gift,
   Settings,
-  CircleUser,
 } from "lucide-react";
 import NavItem from "../NavItem";
 import { ScrollArea } from "../ui/scroll-area";
@@ -48,9 +47,6 @@ function Sidebar() {
             </NavItem>
             <NavItem link={"/settings"} tooltipText={"Settings"}>
               <Settings />
-            </NavItem>
-            <NavItem link={"/profile"} tooltipText={"Profile"}>
-              <CircleUser />
             </NavItem>
           </NavigationMenuList>
         </NavigationMenu>

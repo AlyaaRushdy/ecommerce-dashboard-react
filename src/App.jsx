@@ -7,7 +7,6 @@ import Customers from "./pages/Customers";
 import Reports from "./pages/Reports";
 import Promotions from "./pages/Promotions";
 import Settings from "./pages/Settings";
-import Profile from "./pages/Profile";
 import Sidebar from "./components/shared/Sidebar";
 
 function App() {
@@ -24,7 +23,6 @@ function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
     </>

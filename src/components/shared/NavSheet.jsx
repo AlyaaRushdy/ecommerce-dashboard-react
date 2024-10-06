@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import {
-  CircleUser,
   Gift,
   Grid2X2,
   House,
@@ -76,9 +75,6 @@ function NavSheet() {
               </SheetNavItem>
               <SheetNavItem link={"/settings"} text={"Settings"}>
                 <Settings />
-              </SheetNavItem>
-              <SheetNavItem link={"/profile"} text={"Profile"}>
-                <CircleUser />
               </SheetNavItem>
             </NavigationMenuList>
           </NavigationMenu>
