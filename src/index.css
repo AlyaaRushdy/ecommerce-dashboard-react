@@ -90,3 +90,7 @@
   background-color: white;
   color: hsl(var(--primary));
 }
+
+.navsheet.active {
+  color: hsl(var(--primary));
+}
