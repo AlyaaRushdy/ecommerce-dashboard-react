@@ -14,18 +14,16 @@ import {
   CircleUser,
 } from "lucide-react";
 import NavItem from "../NavItem";
-import ModeToggle from "./modeToggle";
 
 function Sidebar() {
   return (
     <>
-      <aside className="lg:w-28 w-0 bg-primary min-h-screen fixed left-0">
+      <aside className="w-0 sm:w-24 md:w-28 bg-primary h-screen fixed left-0">
         <NavigationMenu className="mx-auto pt-4" orientation="vertical">
           <NavigationMenuList className="flex-col gap-4">
             <NavItem link={"/"} tooltipText={"Dashboard"}>
               <House />
             </NavItem>
-
             <NavItem link={"/orders"} tooltipText={"Orders"}>
               <NotebookText />
             </NavItem>
@@ -50,8 +48,6 @@ function Sidebar() {
             <NavItem link={"/profile"} tooltipText={"Profile"}>
               <CircleUser />
             </NavItem>
-
-            <ModeToggle className="mt-auto" />
           </NavigationMenuList>
         </NavigationMenu>
       </aside>

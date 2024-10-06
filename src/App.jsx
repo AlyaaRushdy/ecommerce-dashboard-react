@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Sidebar />
-      <main className="lg:w-[calc(100%-7rem)] w-full ml-auto pl-3">
+      <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto pl-3">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
