@@ -5,6 +5,8 @@ import FirstRowMainPage from "@/components/FirstRowMainPage";
 import SalesStatistics from "@/components/SalesStatistics";
 import RecentSales from "@/components/RecentSales";
 
+import CustomerSatisfaction from "@/components/CustomerSatisfaction";
+
 
 
 function Home() {
@@ -19,6 +21,7 @@ function Home() {
         <div className="grid gap-4 md:gap-8 lg:grid-cols-1 xl:grid-cols-2">
             <SalesStatistics />
             <RecentSales />
+            <CustomerSatisfaction />
         </div>
       </main>
     </div>
