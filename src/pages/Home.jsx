@@ -105,45 +105,9 @@ function Home() {
   return (
     <>
       <div className="flex w-full flex-col">
-        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-          <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-            <a
-              href="#"
-              className="flex items-center gap-2 text-lg font-semibold md:text-base"
-            >
-              <Package className="h-6 w-6" />
-              <span className="sr-only">Brand Name</span>
-            </a>
-            <a
-              href="#"
-              className="text-foreground transition-colors hover:text-foreground"
-            >
-              Dashboard
-            </a>
-            <a
-              href="#"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Orders
-            </a>
-            <a
-              href="#"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Products
-            </a>
-            <a
-              href="#"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Customers
-            </a>
-            <a
-              href="#"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Analytics
-            </a>
+        <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 w-full">
+          <nav className="hidden flex-col gap-6 md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+            <h1 className="font-bold text-lg">Dashboard</h1>
           </nav>
 
           <Sheet>
@@ -234,7 +198,7 @@ function Home() {
         </header>
       </div>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-8 w-auto h-auto lg:grid-cols-4 ">
           <Card x-chunk="dashboard-01-chunk-0">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
