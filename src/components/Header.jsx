@@ -101,6 +101,7 @@ const Header = () => {
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <ModeToggle />
       </div>
     </header>
   );
