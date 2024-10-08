@@ -8,7 +8,6 @@ import Reports from "./pages/Reports";
 import Promotions from "./pages/Promotions";
 import Settings from "./pages/Settings";
 import Sidebar from "./components/shared/Sidebar";
-import OrderDetails from "./pages/OrderDetails";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/orders" element={<Orders />} />
-          <Route path="/orders/:orderId"element={<OrderDetails/>} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/promotions" element={<Promotions />} />
