@@ -17,7 +17,7 @@ import {
 
 export const description = "Annual Sales Performance Comparison";
 
-// Sample data for the chart
+// Sample data for the chart (now includes all months)
 const chartData = [
   { month: "January", year2022: 186, year2023: 150 },
   { month: "February", year2022: 305, year2023: 250 },
@@ -25,6 +25,12 @@ const chartData = [
   { month: "April", year2022: 73, year2023: 90 },
   { month: "May", year2022: 209, year2023: 180 },
   { month: "June", year2022: 214, year2023: 190 },
+  { month: "July", year2022: 180, year2023: 210 },
+  { month: "August", year2022: 220, year2023: 250 },
+  { month: "September", year2022: 200, year2023: 230 },
+  { month: "October", year2022: 300, year2023: 290 },
+  { month: "November", year2022: 280, year2023: 310 },
+  { month: "December", year2022: 350, year2023: 330 },
 ];
 
 const chartConfig = {
@@ -69,7 +75,7 @@ export function AnnualSalesPerformance() {
       <CardHeader className="bg-gray-100 dark:bg-gray-800 p-4">
         <CardTitle className="text-lg font-semibold">Annual Sales Performance</CardTitle>
         <CardDescription className="text-gray-600 dark:text-gray-400">
-          Comparing 2022 vs. 2023 (January - June)
+          Comparing 2022 vs. 2023 (Full Year)
         </CardDescription>
       </CardHeader>
       <CardContent className="p-4">
@@ -119,7 +125,7 @@ export function AnnualSalesPerformance() {
               Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing sales performance for the last 6 months
+              Showing sales performance for the full year
             </div>
           </div>
         </div>
