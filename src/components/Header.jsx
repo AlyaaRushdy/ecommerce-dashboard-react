@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header className="sticky top-0 flex z-50 h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-        <h1 className="font-bold text-lg">Dashboard</h1>
+        <h1 className="font-bold text-lg">{props.text}</h1>
       </nav>
       <Sheet>
         <SheetTrigger asChild>
