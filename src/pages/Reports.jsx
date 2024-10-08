@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Performance from "@/components/Performance";
 import Transictions from "@/components/Transictions";
 import { WebsiteViews } from "@/components/WebsiteViews";
+import AnnualSalesPerformance from "@/components/AnnualSalesPerformance";
 
 function Reports() {
   return (
@@ -16,6 +17,9 @@ function Reports() {
           <Performance />
           <WebsiteViews />
           <SalesChart />
+        </div>
+        <div className="grid gap-4">
+          <AnnualSalesPerformance />
         </div>
 
       </main>
