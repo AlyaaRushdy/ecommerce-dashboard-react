@@ -8,18 +8,20 @@ import Reports from "./pages/Reports";
 import Promotions from "./pages/Promotions";
 import Settings from "./pages/Settings";
 import Sidebar from "./components/shared/Sidebar";
+import CustomerDetails from "./pages/CustomerDetails";
 
 function App() {
   return (
     <>
       <Sidebar />
-      <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto bg-gray-100 dark:bg-background">
+      <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto bg-gray-100 dark:bg-background min-h-screen">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/customers/:customerId" element={<CustomerDetails />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/settings" element={<Settings />} />
