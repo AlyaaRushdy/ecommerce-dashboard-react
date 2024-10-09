@@ -1,42 +1,12 @@
 import { Users, UserPlus } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  // TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ModeToggle from "@/components/shared/modeToggle";
-// import { DataTableDemo } from "./test";
-import { Link } from "react-router-dom";
+
+import { customers } from "@/test arrays/customers";
+import { columns } from "@/data table columns/customersColumns";
+import DataTable from "@/components/shared/DataTable";
 
 function Customers() {
-  const customers = [
-    {
-      id: "n12i8",
-      name: "Magdy Ahmed",
-      email: "abc@gmail.com",
-      phone: "01234567897",
-      city: "Cairo",
-      registered: "Jan 10, 2024",
-      totalOrders: 4,
-      totalExpense: 1200,
-    },
-    {
-      id: "n12i5",
-      name: "Ahmed Magdy",
-      email: "abc@gmail.com",
-      phone: "01234567897",
-      city: "Giza",
-      registered: "Aug 10, 2024",
-      totalOrders: 0,
-      totalExpense: 0,
-    },
-  ];
-
   return (
     <>
       <div className="p-5">
@@ -77,64 +47,11 @@ function Customers() {
           </Card>
         </div>
 
-        <Card>
-          <CardHeader className="px-7">
-            <CardTitle className="text-lg">All Customers</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table className=" overflow-hidden rounded-t-md">
-              <TableHeader>
-                <TableRow className="bg-gray-50 dark:bg-neutral-900">
-                  <TableHead className="font-bold">Customer ID</TableHead>
-                  <TableHead className="font-bold">Name</TableHead>
-                  <TableHead className="font-bold">Phone Numer</TableHead>
-                  <TableHead className="font-bold">City</TableHead>
-                  <TableHead className="font-bold">Registered</TableHead>
-                  <TableHead className="font-bold">Total Orders</TableHead>
-                  <TableHead className="font-bold">Total Expense</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {customers.map((customer) => (
-                  <TableRow key={customer.id}>
-                    <TableCell>
-                      <Link to={`/customers/${customer.id}`}>
-                        {customer.id}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-col gap-1">
-                        <Link to={`/customers/${customer.id}`}>
-                          {customer.name}
-                        </Link>
-                        <Link
-                          to={`/customers/${customer.id}`}
-                          className="text-muted-foreground"
-                        >
-                          {customer.email}
-                        </Link>
-                      </div>
-                    </TableCell>
-                    <TableCell>{customer.phone}</TableCell>
-                    <TableCell>{customer.city}</TableCell>
-                    <TableCell className="font-medium">
-                      {customer.registered}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {customer.totalOrders}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      &#163;{customer.totalExpense}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-
-        {/* <DataTableDemo /> */}
+        <DataTable
+          data={customers}
+          columns={columns}
+          tableTitle={"All Customers"}
+        />
       </div>
     </>
   );
