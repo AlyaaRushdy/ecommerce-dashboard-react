@@ -20,7 +20,6 @@ import {
   Smartphone,
   UserPlus,
 } from "lucide-react";
-import OrdersTable from "@/components/OrdersTable";
 import HeaderBreadcrumb from "@/components/HeaderBreadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { TrendingUp } from "lucide-react";
@@ -31,6 +30,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import DataTable from "@/components/shared/DataTable";
+import { ordersArray } from "@/test arrays/orders";
+import { orderColumns } from "@/data table columns/customerOrdersColumns";
 
 export const description = "A line chart";
 
@@ -52,52 +54,6 @@ const chartConfig = {
 
 function CustomerDetails() {
   const { customerId } = useParams();
-
-  const data = [
-    {
-      id: "53200002",
-      products: "5 items",
-      date: "Jan 10, 2024",
-      customer: "Ronald Jones",
-      status: "Pending",
-      quantity: 5,
-      city: "New York",
-      totalAmount: "$253.52",
-    },
-    {
-      id: "53200003",
-      products: "3 items",
-      date: "Jan 15, 2024",
-      customer: "Jacob McKinney",
-      status: "Completed",
-      quantity: 3,
-      city: "Los Angeles",
-      totalAmount: "$966.41",
-    },
-    {
-      id: "53200004",
-      products: "8 items",
-      date: "Jan 20, 2024",
-      customer: "Isabella Murphy",
-      status: "Shipping",
-      quantity: 8,
-      city: "Chicago",
-      totalAmount: "$567.51",
-    },
-  ];
-
-  const getStatusClass = (status) => {
-    switch (status) {
-      case "Pending":
-        return "text-red-700";
-      case "Completed":
-        return "text-green-500";
-      case "Shipping":
-        return "text-yellow-400";
-      default:
-        return "";
-    }
-  };
 
   return (
     <>
@@ -256,11 +212,11 @@ function CustomerDetails() {
           </Card>
         </div>
 
-        <Card className="w-full my-4">
-          <CardContent className="pt-6">
-            <OrdersTable data={data} getStatusClass={getStatusClass} />
-          </CardContent>
-        </Card>
+        <DataTable
+          data={ordersArray}
+          columns={orderColumns}
+          tableTitle={"Orders"}
+        />
       </div>
     </>
   );
