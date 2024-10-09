@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Trash2, ChevronsUpDown, PencilLine } from "lucide-react";
+import TableOrderButton from "@/components/tableOrderButton";
+import { Trash2, PencilLine } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // import { MoreHorizontal } from "lucide-react";
@@ -23,16 +23,7 @@ export const columns = [
     // sortingFn: "infoSortingFunction",
     // filterFn: "infoFilteringFunction",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="font-bold p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <TableOrderButton column={column} text={"Name"} />;
     },
     cell: ({ row }) => {
       const rowData = row.original;
@@ -56,31 +47,13 @@ export const columns = [
   {
     accessorKey: "city",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="font-bold p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          City
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <TableOrderButton column={column} text={"City"} />;
     },
   },
   {
     accessorKey: "registered",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="font-bold p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Registered
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <TableOrderButton column={column} text={"Registered in"} />;
     },
     cell: ({ row }) => {
       const date = row.getValue("registered");
@@ -92,32 +65,18 @@ export const columns = [
   {
     accessorKey: "totalOrders",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="font-bold p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total Orders
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <TableOrderButton column={column} text={"Total Orders"} />;
+    },
+    cell: ({ row }) => {
+      const orders = row.getValue("totalOrders");
+      return <p className="text-center">{orders}</p>;
     },
     enableGlobalFilter: false,
   },
   {
     accessorKey: "totalExpense",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="font-bold p-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Total Expense
-          <ChevronsUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <TableOrderButton column={column} text={"Total Expense"} />;
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("totalExpense"));
