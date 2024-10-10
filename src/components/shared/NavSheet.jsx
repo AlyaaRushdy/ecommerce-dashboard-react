@@ -31,8 +31,8 @@ function NavSheet() {
     <>
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sm:hidden">
-            <PanelLeft className="h-5 w-5" />
+          <Button size="icon" variant="outline" className="sm:hidden p-2">
+            <PanelLeft />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>

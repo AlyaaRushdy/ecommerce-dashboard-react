@@ -1,36 +1,36 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { addDays, format, isBefore } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
+import * as React from "react";
+import { addDays, format, isBefore } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export default function DatePickerWithRange({ className }) {
-  const today = new Date()
+  const today = new Date();
   const [date, setDate] = React.useState(() => {
-    const sevenDaysAgo = addDays(today, -7)
+    const sevenDaysAgo = addDays(today, -7);
     return {
       from: sevenDaysAgo,
-      to: today
-    }
-  })
+      to: today,
+    };
+  });
 
   const handleSelect = (newDate) => {
-    setDate(prev => {
-      if (!newDate) return { from: undefined, to: undefined }
-      
-      const to = newDate.to && isBefore(newDate.to, today) ? newDate.to : today
-      return { from: newDate.from, to }
-    })
-  }
+    setDate((prev) => {
+      if (!newDate) return { from: undefined, to: undefined };
+
+      const to = newDate.to && isBefore(newDate.to, today) ? newDate.to : today;
+      return { from: newDate.from, to };
+    });
+  };
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -40,7 +40,7 @@ export default function DatePickerWithRange({ className }) {
             id="date"
             variant="outline"
             className={cn(
-              "w-full sm:w-[300px] justify-start text-left font-normal",
+              "justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
@@ -63,11 +63,10 @@ export default function DatePickerWithRange({ className }) {
               {date?.from ? (
                 date.to ? (
                   <>
-                    {format(date.from, "MM/dd/yy")} -{" "}
-                    {format(date.to, "MM/dd/yy")}
+                    {format(date.from, "LLL dd")} - {format(date.to, "LLL dd")}
                   </>
                 ) : (
-                  format(date.from, "MM/dd/yy")
+                  format(date.from, "LLL dd")
                 )
               ) : (
                 "Pick a date"
@@ -99,5 +98,5 @@ export default function DatePickerWithRange({ className }) {
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

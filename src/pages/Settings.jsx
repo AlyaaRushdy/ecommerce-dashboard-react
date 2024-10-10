@@ -1,7 +1,11 @@
+import Header from "@/components/shared/Header";
+
 function Settings() {
   return (
     <>
-      <h1>Settings Page</h1>
+      <div className="p-5">
+        <Header currentPage={"Settings"} />
+      </div>
     </>
   );
 }

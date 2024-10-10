@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import Header from "../components/Header";
+import Header from "../components/shared/Header";
 import { BellRing } from "lucide-react";
 import DataTable from "@/components/shared/DataTable";
 import { productsColumns } from "@/data table columns/productsColumns";
@@ -49,12 +49,11 @@ export default function CardWithForm() {
     },
   };
   return (
-    <main>
-      <section className="header">
-        <Header text={"Products"} />
-      </section>
+    <main className="p-5">
+      <Header currentPage={"Producst"} />
+
       {/* start card */}
-      <section className="row m-5 grid grid-cols-12 gap-4">
+      <section className="row py-4 grid grid-cols-12 gap-4">
         <div className="card md:col-span-4 lg:col-span-4 col-span-12 ">
           <Card>
             <CardHeader>
@@ -137,7 +136,7 @@ export default function CardWithForm() {
       </section>
       {/* start table */}
 
-      <div className="px-5">
+      <div>
         <DataTable
           columns={productsColumns}
           data={productsArray}
