@@ -46,7 +46,7 @@ function Header({ currentPage, prevPage, prevPageLink }) {
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <ModeToggle />
+        <ModeToggle/>
       </div>
     </header>
   );
