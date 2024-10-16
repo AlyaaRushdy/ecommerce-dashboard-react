@@ -11,11 +11,11 @@ import { Link } from "react-router-dom";
 
 const HeaderBreadcrumb = ({ prevPageLink, prevPage, currentPage }) => {
   return (
-    <Breadcrumb>
-      <BreadcrumbList className="gap-1 sm:gap-2 text-sm sm:text-lg lg:text-2xl leading-none font-medium">
+    <Breadcrumb className="flex-grow">
+      <BreadcrumbList className="sm:gap-1 text-2xl leading-none font-medium">
         {prevPage && (
           <>
-            <BreadcrumbItem className="inline-flex">
+            <BreadcrumbItem className="hidden md:inline-flex">
               <BreadcrumbLink asChild>
                 <Link
                   to={prevPageLink}
@@ -25,7 +25,7 @@ const HeaderBreadcrumb = ({ prevPageLink, prevPage, currentPage }) => {
                 </Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="[&>svg]:size-4 sm:[&>svg]:size-5 mx-2 self-end" />
+            <BreadcrumbSeparator className="hidden md:inline-flex [&>svg]:size-5 self-end" />
           </>
         )}
         <BreadcrumbItem>

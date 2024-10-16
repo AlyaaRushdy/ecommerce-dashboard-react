@@ -24,7 +24,7 @@ function Header({ currentPage, prevPage, prevPageLink }) {
         prevPageLink={prevPageLink}
       />
 
-      <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
+      <div className="flex items-center justify-end gap-2 md:ml-auto md:gap-3 lg:gap-4">
         <DateRangePicker />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -46,7 +46,7 @@ function Header({ currentPage, prevPage, prevPageLink }) {
             <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <ModeToggle/>
+        <ModeToggle />
       </div>
     </header>
   );
