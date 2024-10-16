@@ -11,6 +11,7 @@ import Sidebar from "./components/shared/Sidebar";
 import CustomerDetails from "./pages/CustomerDetails";
 import ErrorPage from "./pages/ErrorPage";
 import SingleProduct from "./pages/SingleProduct";
+import AddCategory from "./pages/AddCategory";
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					<Route path="/products" element={<Products />} />
 					<Route path="/products/:id" element={<SingleProduct />} />
 					<Route path="/categories" element={<Categories />} />
+					<Route path="/categories/create" element={<AddCategory />} />
 					<Route path="/orders" element={<Orders />} />
 					<Route path="/customers" element={<Customers />} />
 					<Route path="/customers/:customerId" element={<CustomerDetails />} />

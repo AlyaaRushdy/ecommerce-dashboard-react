@@ -21,8 +21,9 @@ import {
 import TablePagination from "@/components/tablePagination";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
-function DataTable({ data, columns, tableTitle }) {
+function DataTable({ data, columns, tableTitle , ButtonLink , ButtonText }) {
   const [sorting, setSorting] = useState([]);
   //   const [columnFilters, setColumnFilters] = useState([]);
   const [globalFilter, setGlobalFilter] = useState([]);
@@ -66,21 +67,21 @@ function DataTable({ data, columns, tableTitle }) {
         <CardHeader className="px-7 pb-0">
           <CardTitle className="text-lg">{tableTitle}</CardTitle>
 
-          <div className="flex items-center py-6">
-            {/* <Input
-              placeholder="Search by Name..."
-              value={table.getColumn("info")?.getFilterValue() ?? ""}
-              onChange={(event) =>
-                table.getColumn("info")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            /> */}
+          <div className="flex items-center justify-between py-6">
+            
             <Input
               placeholder="Search..."
               //   value={table.getColumn("info")?.getFilterValue() ?? ""}
               onChange={(e) => table.setGlobalFilter(String(e.target.value))}
               className="max-w-sm"
-            />
+            />  
+            {ButtonText &&           
+            <Link
+                to={ButtonLink} // Replace with your actual create route
+                className="bg-primary text-white px-4 py-2 rounded-md shadow-md hover:bg-orange-600 transition"
+              >
+                {ButtonText}
+              </Link>}
           </div>
         </CardHeader>
         <CardContent>

@@ -77,10 +77,10 @@ export const categoriesColumns = [
       const rowData = row.original;
       return (
         <div className="flex justify-center gap-4 text-gray-600">
-          <Link to={`/products/${rowData.id}`} className="hover:text-blue-500">
+          <Link to={`/categories/${rowData.id}`} className="hover:text-blue-500">
             <Eye className="inline-block" size={20} />
           </Link>
-          <Link to={`/products`} className="hover:text-green-500">
+          <Link to={`/categories`} className="hover:text-green-500">
             <PencilLine className="inline-block" size={20} />
           </Link>
           <Link to={"/"} className="hover:text-red-500">
