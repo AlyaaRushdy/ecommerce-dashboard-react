@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-
 import {
   Card,
   CardContent,
@@ -14,7 +13,6 @@ import {
   LogIn,
   MapPin,
   NotebookText,
-  ShoppingBag,
   Smartphone,
   UserPlus,
 } from "lucide-react";
@@ -29,9 +27,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import DataTable from "@/components/shared/DataTable";
-import { ordersArray } from "@/test arrays/orders";
 import { orderColumns } from "@/data table columns/customerOrdersColumns";
 import Header from "@/components/shared/Header";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "@/components/shared/loading";
+import CustomerInfo from "@/components/customerInfo";
 
 export const description = "A line chart";
 
@@ -53,167 +54,197 @@ const chartConfig = {
 
 function CustomerDetails() {
   const { customerId } = useParams();
+  const [customer, setCustomer] = useState({});
+  const [customerOrders, setCustomerOrders] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/${customerId}`)
+      .then((res) => res.data)
+      .then((res) => {
+        setCustomer(res.user);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    axios
+      .get(`http://localhost:5000/orders/user/${customerId}`)
+      .then((res) => {
+        if (res.status === 404) {
+          setCustomerOrders([]);
+        } else {
+          setCustomerOrders(res.data.results);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, [customerId]);
+
+  const totalRevinue = customerOrders?.reduce((prev, curr) => {
+    prev += curr.totalPrice;
+    return prev;
+  }, 0);
+
+  const formatter = new Intl.NumberFormat("en-GB", {
+    style: "currency",
+    currency: "GBP",
+  });
 
   return (
     <>
-      <div className="p-5">
-        <Header
-          currentPage={customerId}
-          prevPage={"Customers"}
-          prevPageLink={"/customers"}
-        />
+      {Object.keys(customer).length === 0 &&
+      Object.keys(customerOrders).length === 0 ? (
+        <Loading />
+      ) : (
+        <div className="p-5">
+          <Header
+            currentPage={`${customer.fname} ${customer.lname}`}
+            prevPage={"Customers"}
+            prevPageLink={"/customers"}
+          />
 
-        <div className="flex flex-col md:flex-row gap-4 py-4">
-          <Card className="w-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Orders
-              </CardTitle>
-              <NotebookText className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-1">8</div>
-            </CardContent>
-          </Card>
+          <div className="flex flex-col md:flex-row gap-4 py-4">
+            <Card className="w-full">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Orders
+                </CardTitle>
+                <NotebookText className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold mb-1">
+                  {customerOrders.length}
+                </div>
+              </CardContent>
+            </Card>
 
-          <Card className="w-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Revenue
-              </CardTitle>
-              <Banknote className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-1"> &#163;2700</div>
-            </CardContent>
-          </Card>
+            <Card className="w-full">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Revenue
+                </CardTitle>
+                <Banknote className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold mb-1">
+                  E{formatter.format(totalRevinue)}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-          <Card className="w-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Bought Products
-              </CardTitle>
-              <ShoppingBag className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold mb-1">12</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-4 pb-4">
-          <Card className="w-full lg:w-1/3">
-            <CardContent className="pt-6 flex flex-col gap-2">
-              <div className="flex flex-col gap-2 items-center">
-                <Avatar className="h-16 w-16 flex">
-                  <AvatarImage src={"customerImage"} alt="Avatar" />
-                  <AvatarFallback>AM</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p>Ahmed Magdy</p>
-                  <p className="text-muted-foreground">abc@gmail.com</p>
+          <div className="flex flex-col lg:flex-row gap-4 pb-4">
+            <Card className="w-full lg:w-1/3">
+              <CardContent className="pt-6 flex flex-col gap-2">
+                <div className="flex flex-col gap-2 items-center text-center">
+                  <Avatar className="h-16 w-16 flex ">
+                    <AvatarImage
+                      src={customer.profileImage ?? customer.profileImage}
+                      alt="Avatar"
+                    />
+                    <AvatarFallback>
+                      {customer.fname[0] + customer.lname[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <p>{`${customer.fname} ${customer.lname}`}</p>
+                    <p className="text-muted-foreground">{customer.email}</p>
+                  </div>
                 </div>
-              </div>
-              <Separator className="mb-2" />
-              <div className="flex gap-2">
-                <Smartphone className="text-muted-foreground w-5" />
-                <div>
-                  <p className="font-semibold">Phone Number</p>
-                  <p className="text-muted-foreground">01234567897</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <UserPlus className="text-muted-foreground w-5" />
-                <div>
-                  <p className="font-semibold">Signup date</p>
-                  <p className="text-muted-foreground">Jun 15, 2024</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <LogIn className="text-muted-foreground w-5" />
-                <div>
-                  <p className="font-semibold">Last Login date</p>
-                  <p className="text-muted-foreground">Aug 20, 2024</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <MapPin className="text-muted-foreground w-5" />
-                <div>
-                  <p className="font-semibold">Address</p>
-                  <p className="text-muted-foreground">
-                    123 Nile Avenue, Apartment 4B, Zamalek District, Cairo,
-                    Egypt
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Banknote className="text-muted-foreground w-5" />
-                <div>
-                  <p className="font-semibold">Payment Method</p>
-                  <p className="text-muted-foreground">Credit Card</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="w-full lg:w-2/3">
-            <CardHeader>
-              <CardTitle>Orders</CardTitle>
-              <CardDescription>January - June 2024</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ChartContainer
-                config={chartConfig}
-                className="max-h-72 min-w-full"
-              >
-                <LineChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 12,
-                    right: 12,
-                  }}
+                <Separator className="mb-2" />
+                <CustomerInfo title={"Phone Number"} value={customer.phone}>
+                  <Smartphone className="text-muted-foreground w-5" />
+                </CustomerInfo>
+                <CustomerInfo
+                  title={"Signup Date"}
+                  value={new Date(customer.createdAt).toDateString()}
                 >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Line
-                    dataKey="orders"
-                    type="natural"
-                    stroke="var(--color-orders)"
-                    strokeWidth={2}
-                    dot={false}
-                  />
-                </LineChart>
-              </ChartContainer>
-            </CardContent>
-            <CardFooter className="flex-col items-start gap-2 text-sm">
-              <div className="flex gap-2 font-medium leading-none">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Showing total orders since signing up
-              </div>
-            </CardFooter>
-          </Card>
-        </div>
+                  <UserPlus className="text-muted-foreground w-5" />
+                </CustomerInfo>
+                <CustomerInfo
+                  title={"Last Login date"}
+                  value={customer.lastLoginDate ? customer.lastLoginDate : "-"}
+                >
+                  <LogIn className="text-muted-foreground w-5" />
+                </CustomerInfo>
+                <CustomerInfo
+                  title={"Address"}
+                  value={
+                    "123 Nile Avenue, Apartment 4B, Zamalek District, Cairo, Egypt"
+                  }
+                >
+                  <MapPin className="text-muted-foreground w-5" />
+                </CustomerInfo>
+                <CustomerInfo
+                  title={"Payment Method"}
+                  value={"Cash on Deliveryt"}
+                >
+                  <Banknote className="text-muted-foreground w-5" />
+                </CustomerInfo>
+              </CardContent>
+            </Card>
 
-        <DataTable
-          data={ordersArray}
-          columns={orderColumns}
-          tableTitle={"Orders"}
-        />
-      </div>
+            <Card className="w-full lg:w-2/3">
+              <CardHeader>
+                <CardTitle>Orders</CardTitle>
+                <CardDescription>January - June 2024</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ChartContainer
+                  config={chartConfig}
+                  className="max-h-72 min-w-full"
+                >
+                  <LineChart
+                    accessibilityLayer
+                    data={chartData}
+                    margin={{
+                      left: 12,
+                      right: 12,
+                    }}
+                  >
+                    <CartesianGrid vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tickLine={false}
+                      axisLine={false}
+                      tickMargin={8}
+                      tickFormatter={(value) => value.slice(0, 3)}
+                    />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel />}
+                    />
+                    <Line
+                      dataKey="orders"
+                      type="natural"
+                      stroke="var(--color-orders)"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ChartContainer>
+              </CardContent>
+              <CardFooter className="flex-col items-start gap-2 text-sm">
+                <div className="flex gap-2 font-medium leading-none">
+                  Trending up by 5.2% this month{" "}
+                  <TrendingUp className="h-4 w-4" />
+                </div>
+                <div className="leading-none text-muted-foreground">
+                  Showing total orders since signing up
+                </div>
+              </CardFooter>
+            </Card>
+          </div>
+
+          <DataTable
+            data={customerOrders}
+            columns={orderColumns}
+            tableTitle={"Orders"}
+          />
+        </div>
+      )}
     </>
   );
 }
