@@ -1,25 +1,31 @@
 import TableOrderButton from "@/components/tableOrderButton";
-import { Trash2, PencilLine } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { Ban } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// import { MoreHorizontal } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuLabel,
-//   DropdownMenuSeparator,
-//   DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
+const getStatusClass = (status) => {
+  switch (status) {
+    case "active":
+      // return "text-green-500";
+      return "text-white bg-green-500 rounded-full px-2 py-0.5 text-sm";
+    case "canceled":
+    case "banned":
+      // return "text-red-500";
+      return "text-white bg-red-500 rounded-full px-2 py-0.5 text-sm";
+
+    default:
+      return "";
+  }
+};
 
 export const columns = [
+  // {
+  //   accessorKey: "id",
+  //   header: "ID",
+  // },
   {
-    accessorKey: "id",
-    header: "ID",
-  },
-  {
-    accessorKey: "name",
+    accessorKey: "fullName",
     // sortingFn: "infoSortingFunction",
     // filterFn: "infoFilteringFunction",
     header: ({ column }) => {
@@ -27,114 +33,106 @@ export const columns = [
     },
     cell: ({ row }) => {
       const rowData = row.original;
+      return <Link to={`/customers/${rowData.id}`}>{rowData.fullName}</Link>;
+    },
+  },
+  {
+    accessorKey: "email",
+    // sortingFn: "infoSortingFunction",
+    // filterFn: "infoFilteringFunction",
+    header: ({ column }) => {
+      return <TableOrderButton column={column} text={"Email"} />;
+    },
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <Link to={`/customers/${rowData.id}`}>{rowData.email}</Link>;
+    },
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone Number",
+  },
+  {
+    accessorKey: "accountStatus",
+    header: ({ column }) => {
+      return <TableOrderButton column={column} text={"Status"} />;
+    },
+    cell: ({ row }) => {
       return (
-        <div className="flex flex-col gap-1">
-          <Link to={`/customers/${rowData.id}`}>{rowData.name}</Link>
-          <Link
-            to={`/customers/${rowData.id}`}
-            className="text-muted-foreground"
-          >
-            {rowData.email}
-          </Link>
-        </div>
+        <>
+          <div className="text-center">
+            <span className={getStatusClass(row.original.accountStatus)}>
+              {row.original.accountStatus}
+            </span>
+          </div>
+        </>
       );
     },
   },
   {
-    accessorKey: "phoneNum",
-    header: "Phone Number",
-  },
-  {
-    accessorKey: "city",
-    header: ({ column }) => {
-      return <TableOrderButton column={column} text={"City"} />;
-    },
-  },
-  {
-    accessorKey: "registered",
+    accessorKey: "createdAt",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Registered in"} />;
     },
     cell: ({ row }) => {
-      const date = row.getValue("registered");
-      return <div className="font-medium">{date.toDateString()}</div>;
+      const date = row.getValue("createdAt");
+      return <div className="font-medium">{new Date(date).toDateString()}</div>;
     },
     sortingFn: "datetime",
     enableGlobalFilter: false,
   },
-  {
-    accessorKey: "totalOrders",
-    header: ({ column }) => {
-      return <TableOrderButton column={column} text={"Total Orders"} />;
-    },
-    cell: ({ row }) => {
-      const orders = row.getValue("totalOrders");
-      return <p className="text-center">{orders}</p>;
-    },
-    enableGlobalFilter: false,
-  },
-  {
-    accessorKey: "totalExpense",
-    header: ({ column }) => {
-      return <TableOrderButton column={column} text={"Total Expense"} />;
-    },
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("totalExpense"));
-      const formatted = new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      }).format(amount);
+  // {
+  //   accessorKey: "totalOrders",
+  //   header: ({ column }) => {
+  //     return <TableOrderButton column={column} text={"Total Orders"} />;
+  //   },
+  //   cell: ({ row }) => {
+  //     const orders = row.getValue("totalOrders");
+  //     return <p className="text-center">{orders}</p>;
+  //   },
+  //   enableGlobalFilter: false,
+  // },
+  // {
+  //   accessorKey: "totalExpense",
+  //   header: ({ column }) => {
+  //     return <TableOrderButton column={column} text={"Total Expense"} />;
+  //   },
+  //   cell: ({ row }) => {
+  //     const amount = parseFloat(row.getValue("totalExpense"));
+  //     const formatted = new Intl.NumberFormat("en-GB", {
+  //       style: "currency",
+  //       currency: "GBP",
+  //     }).format(amount);
 
-      return <div className="font-medium">E{formatted}</div>;
-    },
-    enableGlobalFilter: false,
-  },
+  //     return <div className="font-medium">E{formatted}</div>;
+  //   },
+  //   enableGlobalFilter: false,
+  // },
   {
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
       const rowData = row.original;
       return (
-        // <DropdownMenu>
-        //   <DropdownMenuTrigger asChild>
-        //     <Button variant="ghost" className="h-8 w-8 p-0">
-        //       <span className="sr-only">Open menu</span>
-        //       <MoreHorizontal className="h-4 w-4" />
-        //     </Button>
-        //   </DropdownMenuTrigger>
-        //   <DropdownMenuContent align="end">
-        //     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-        //     <DropdownMenuItem>
-        //       <Link to={"/"}>
-        //         <PencilLine
-        //           className="inline-block text-muted-foreground me-2"
-        //           size={20}
-        //         />
-        //         Edit
-        //       </Link>
-        //     </DropdownMenuItem>
-        //     <DropdownMenuItem>
-        //       <Link to={"/"}>
-        //         <Trash
-        //           className="inline-block text-muted-foreground me-2"
-        //           size={20}
-        //         />
-        //         Delete
-        //       </Link>
-        //     </DropdownMenuItem>
-        //   </DropdownMenuContent>
-        // </DropdownMenu>
-
         <div className="flex gap-4">
-          <Link to={`/customers/${rowData.id}`}>
-            <PencilLine
-              className="inline-block text-muted-foreground"
-              size={20}
-            />
-          </Link>
-          <Link to={"/"}>
-            <Trash2 className="inline-block text-muted-foreground" size={20} />
-          </Link>
+          <Button
+            variant={"link"}
+            className="text-muted-foreground hover:text-red-600"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log("clicked");
+              console.log(
+                `http://localhost:5000/users/banAccount/${rowData.id}`
+              );
+              axios
+                .put(`http://localhost:5000/users/banAccount/${rowData.id}`)
+                .catch((err) => {
+                  console.log(err.response);
+                });
+            }}
+          >
+            <Ban size={20} />
+          </Button>
         </div>
       );
     },
