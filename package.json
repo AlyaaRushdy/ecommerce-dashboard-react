@@ -31,7 +31,12 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "esbuild": "^0.24.0",
+<<<<<<< HEAD
     "framer-motion": "^11.11.9",
+=======
+    "framer-motion": "^11.11.7",
+    "joi": "^17.13.3",
+>>>>>>> 05a97a7b31fa6f7279e466ffe616de08f38b7a5a
     "lucide-react": "^0.447.0",
     "radix-ui": "^1.0.1",
     "react": "^18.3.1",
