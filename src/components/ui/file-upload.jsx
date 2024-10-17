@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 import { cn } from "@/lib/utils";
-// eslint-disable-next-line no-unused-vars
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { IconUpload } from "@tabler/icons-react";
+import { IconUpload} from "@tabler/icons-react";
+import { TrashIcon } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 
 const mainVariant = {
@@ -27,25 +28,58 @@ const secondaryVariant = {
 };
 
 // eslint-disable-next-line react/prop-types
-export const FileUpload = ({ onChange }) => {
+export const FileUpload = ({ onChange, maxFiles = 5 }) => {
   const [files, setFiles] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const fileInputRef = useRef(null);
 
   const handleFileChange = (newFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    const supportedTypes = ["image/png", "image/jpeg", "image/gif"]; // Supported types
+    const allFiles = [...files];
+    let isValid = true;
+
+    newFiles.forEach((file) => {
+      if (supportedTypes.includes(file.type)) {
+        allFiles.push(file);
+      } else {
+        isValid = false;
+        setErrorMessage(`File type ${file.type} is not supported`);
+      }
+    });
+
+    if (isValid) {
+      setFiles(allFiles);
+      setErrorMessage(null); // Reset error message if valid
+      onChange && onChange(allFiles);
+    }
   };
 
-  const handleClick = () => {
+
+  const handleRemoveFile = (e, fileName) => {
+    e.stopPropagation(); // Prevent file upload window from opening
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
+
+  const handleClick = (e) => {
+    e.stopPropagation(); // Ensure that clicking won't open the file selector when removing
     fileInputRef.current?.click();
   };
 
   const { getRootProps, isDragActive } = useDropzone({
-    multiple: false,
+    multiple: true,
     noClick: true,
     onDrop: handleFileChange,
-    onDropRejected: (error) => {
-      console.log(error);
+    onDropRejected: (fileRejections) => {
+      // Handle rejected files
+      const unsupportedFiles = fileRejections.map(
+        (rejection) => rejection.file.name
+      );
+      setErrorMessage(`Unsupported files: ${unsupportedFiles.join(", ")}`);
+    },
+    accept: {
+      "image/png": [],
+      "image/jpeg": [],
+      "image/gif": [],
     },
   });
 
@@ -62,17 +96,21 @@ export const FileUpload = ({ onChange }) => {
           type="file"
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
+          multiple
         />
-        <div className="absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,white,transparent)]">
-          <GridPattern />
-        </div>
         <div className="flex flex-col items-center justify-center">
-          <p className="relative z-20 font-sans font-bold text-neutral-700 dark:text-neutral-300 text-base">
-            Upload file
-          </p>
           <p className="relative z-20 font-sans font-normal text-neutral-400 dark:text-neutral-400 text-base mt-2">
             Drag or drop your files here or click to upload
           </p>
+          <p className="relative z-20 font-sans font-normal text-neutral-400 dark:text-neutral-400 text-sm mt-1">
+            1600 x 1200 (4:3) recommended. PNG, JPG, and GIF files are allowed
+          </p>
+
+          {/* Error message display */}
+          {errorMessage && (
+            <p className="text-red-500 font-semibold mt-2">{errorMessage}</p>
+          )}
+
           <div className="relative w-full mt-10 max-w-xl mx-auto">
             {files.length > 0 &&
               files.map((file, idx) => (
@@ -121,6 +159,14 @@ export const FileUpload = ({ onChange }) => {
                       modified{" "}
                       {new Date(file.lastModified).toLocaleDateString()}
                     </motion.p>
+
+                    {/* Trash Icon for removing file */}
+                    <motion.button
+                      className="text-red-500 hover:text-red-700"
+                      onClick={(e) => handleRemoveFile(e, file.name)} // Prevent file upload window from opening
+                    >
+                      <TrashIcon />
+                    </motion.button>
                   </div>
                 </motion.div>
               ))}
@@ -165,27 +211,3 @@ export const FileUpload = ({ onChange }) => {
     </div>
   );
 };
-
-export function GridPattern() {
-  const columns = 41;
-  const rows = 11;
-  return (
-    <div className="flex bg-gray-100 dark:bg-neutral-900 flex-shrink-0 flex-wrap justify-center items-center gap-x-px gap-y-px  scale-105">
-      {Array.from({ length: rows }).map((_, row) =>
-        Array.from({ length: columns }).map((_, col) => {
-          const index = row * columns + col;
-          return (
-            <div
-              key={`${col}-${row}`}
-              className={`w-10 h-10 flex flex-shrink-0 rounded-[2px] ${
-                index % 2 === 0
-                  ? "bg-gray-50 dark:bg-neutral-950"
-                  : "bg-gray-50 dark:bg-neutral-950 shadow-[0px_0px_1px_3px_rgba(255,255,255,1)_inset] dark:shadow-[0px_0px_1px_3px_rgba(0,0,0,1)_inset]"
-              }`}
-            />
-          );
-        })
-      )}
-    </div>
-  );
-}
