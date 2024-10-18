@@ -12,7 +12,7 @@ function Promotions() {
       <div className="mt-12">
         <div className="flex justify-end">
           <Button className="mb-10" type="primary">
-            <Link to="/addPromotion">Add Promotions</Link>
+            <Link to="/promotions/addPromotion">Add Promotions</Link>
           </Button>
         </div>
         <div className="mt-10">

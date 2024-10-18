@@ -122,13 +122,13 @@ function App() {
             }
           />
           <Route
-          path="/addPromotion"
-          element={
-            <ProtectedRoute>
-          <AddPromotion />
-          </ProtectedRoute>
-          }
-           />
+            path="/promotions/addPromotion"
+            element={
+              <ProtectedRoute>
+                <AddPromotion />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/settings"
             element={
