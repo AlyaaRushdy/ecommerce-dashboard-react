@@ -29,9 +29,9 @@ const OwnerControl = () => {
           <Sheet>
             {/* Avoid using a button-like element inside SheetTrigger */}
             <SheetTrigger asChild>
-              <span className="cursor-pointer text-primary mb-10">
+              <button className="cursor-pointer text-primary mb-10">
                 Add Admin
-              </span>
+              </button>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>Add Admin</SheetHeader>
