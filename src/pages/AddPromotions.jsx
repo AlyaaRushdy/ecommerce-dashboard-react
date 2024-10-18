@@ -7,7 +7,7 @@ const AddPromotion = () => {
   const [startDate, setStartDate] = useState("");
   return (
     <div className="p-5">
-      <Header currentPage={""} />
+      <Header currentPage={"Create Promotion"} prevPage={"Promotion"} prevPageLink={"/promotions"} />
       <div className="grid gap-4 grid-cols-12 mt-10">
         <div className="card md:col-span-4 lg:col-span-4 col-span-12 ">
           <div className="mb-4">
