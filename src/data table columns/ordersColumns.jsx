@@ -1,22 +1,25 @@
-import TableOrderButton from "@/components/tableOrderButton";
-import { Button } from "@/components/ui/button";
-import { Trash2, ChevronsUpDown, PencilLine, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
 
+import { Button } from "@/components/ui/button";
+import { ChevronsUpDown, PencilLine } from "lucide-react";
+import { Link } from "react-router-dom";
+import TableOrderButton from "@/components/tableOrderButton";
+
+// function for CSS class based on the order status
 const getStatusClass = (status) => {
   switch (status) {
-    case "under testing":
-      return "text-yellow-500";
+    case "Under testing":
+      return "text-yellow-600";
     case "Completed":
-      return "text-green-500";
+      return "text-green-600";
     case "Shipping":
-      return "text-blue-500";
+      return "text-blue-600";
     default:
       return "";
   }
 };
 
-export const orderColumns = [
+// Define the order columns
+export const orderColumns = (handleStatusUpdate) => [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -75,7 +78,7 @@ export const orderColumns = [
     enableGlobalFilter: false,
   },
   {
-    accessorKey: `userName`,
+    accessorKey: "userName",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Customer Name"} />;
     },
@@ -84,39 +87,41 @@ export const orderColumns = [
       return <Link to={`/customers/${row.original.userId}`}>{customer}</Link>;
     },
   },
+
+
+
+
+
+
+
+
   {
     accessorKey: "status",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Status"} />;
     },
     cell: ({ row }) => {
+      const status = row.original.status;
+      const id = row.original.id;
       return (
-        <>
-          <span className={getStatusClass(row.original.status)}>
-            {row.original.status}
-          </span>
-        </>
+        <div className="flex items-center">
+          <span className={getStatusClass(status)}>{status}</span>
+
+          <PencilLine
+            className="inline-block ml-2 text-muted-foreground cursor-pointer"
+            size={20}
+            onClick={() => handleStatusUpdate(id, status)}
+          />
+        </div>
       );
     },
   },
-  // {
-  //   accessorKey: "quantity",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"Quantity"} />;
-  //   },
-  //   cell: ({ row }) => {
-  //     const qty = row.getValue("quantity");
-  //     return <div className="text-center">{qty}</div>;
-  //   },
-  //   enableGlobalFilter: false,
-  // },
 
-  // {
-  //   accessorKey: "city",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"City"} />;
-  //   },
-  // },
+
+
+
+
+
 
   {
     accessorKey: "totalPrice",
@@ -134,25 +139,5 @@ export const orderColumns = [
     },
     enableGlobalFilter: false,
   },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: ({ row }) => {
-      const rowData = row.original;
-      return (
-        <div className="flex gap-4">
-          <Link to={`/orders`}>
-            <PencilLine
-              className="inline-block text-muted-foreground"
-              size={20}
-            />
-          </Link>
-          <Link to={"/"}>
-            <Trash2 className="inline-block text-muted-foreground" size={20} />
-          </Link>
-        </div>
-      );
-    },
-    enableGlobalFilter: false,
-  },
+ 
 ];
