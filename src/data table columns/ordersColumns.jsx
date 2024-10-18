@@ -18,7 +18,7 @@ const getStatusClass = (status) => {
   }
 };
 
-// Define the order columns
+// Define  order columns
 export const orderColumns = (handleStatusUpdate) => [
   {
     accessorKey: "id",
