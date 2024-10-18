@@ -16,6 +16,7 @@ import DateRangePicker from "../DateRangePicker";
 import { useDispatch } from "react-redux";
 import { useToast } from "@/hooks/use-toast";
 import { setToken } from "@/slices/userSlice";
+import { Link } from "react-router-dom";
 
 function Header({ currentPage, prevPage, prevPageLink }) {
   const dispatch = useDispatch();
@@ -55,7 +56,9 @@ function Header({ currentPage, prevPage, prevPageLink }) {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link to={"/settings"}> Settings</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
