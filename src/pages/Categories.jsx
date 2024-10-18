@@ -20,19 +20,26 @@ function Categories() {
     try {
       const response = await axios.get("http://localhost:5000/categories");
       if (response.status === 200) {
-        setCategories(response.data.categories);
+        if (response.data.categories && response.data.categories.length === 0) {
+          setCategories([]);
+        } else {
+          setCategories(response.data.categories);
+        }
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch categories. Please try again.",
-        variant: "destructive",
-      });
+      if (error.response) {
+        toast({
+          title: "Error",
+          description: "Failed to fetch categories. Please try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
   };
+
   const handleDeleteCategory = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
@@ -44,7 +51,7 @@ function Categories() {
             title: "Success",
             description: "Category deleted successfully.",
           });
-          fetchCategories(); // Refresh the categories list
+          fetchCategories(); 
         }
       } catch (error) {
         console.error("Error deleting category:", error);
