@@ -48,16 +48,21 @@ export const FileUpload = ({ onChange, maxFiles = 5 }) => {
     });
 
     if (isValid) {
+      if (allFiles.length > maxFiles) {
+        setErrorMessage(`You can upload up to ${maxFiles} files.`);
+        return;
+      }
       setFiles(allFiles);
       setErrorMessage(null); // Reset error message if valid
-      onChange && onChange(allFiles);
+      onChange && onChange(allFiles); // Notify parent about file changes
     }
   };
 
-
   const handleRemoveFile = (e, fileName) => {
     e.stopPropagation(); // Prevent file upload window from opening
-    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+    const updatedFiles = files.filter((file) => file.name !== fileName);
+    setFiles(updatedFiles);
+    onChange && onChange(updatedFiles); // Notify parent about file removal
   };
 
   const handleClick = (e) => {

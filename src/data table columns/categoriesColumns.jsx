@@ -1,10 +1,9 @@
 import TableOrderButton from "@/components/tableOrderButton";
-import { Trash2, PencilLine, Eye } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Trash2, PencilLine} from "lucide-react";
 
-export const categoriesColumns = [
+export const categoriesColumns = (handleEditCategory, handleDeleteCategory) => [
   {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: ({ column }) => {
       return (
         <TableOrderButton
@@ -16,7 +15,7 @@ export const categoriesColumns = [
     },
   },
   {
-    accessorKey: "name",
+    accessorKey: "categoryTitle",
     header: ({ column }) => {
       return (
         <TableOrderButton
@@ -29,19 +28,19 @@ export const categoriesColumns = [
   },
 
   {
-    accessorKey: "startingPrice",
+    accessorKey: "description",
     header: ({ column }) => {
       return (
         <TableOrderButton
           column={column}
-          text={"Starting Price"}
+          text={"Description"}
           className="text-center font-semibold text-gray-700"
         />
       );
     },
   },
   {
-    accessorKey: "productStock",
+    accessorKey: "stock",
     header: ({ column }) => {
       return (
         <TableOrderButton
@@ -52,40 +51,37 @@ export const categoriesColumns = [
       );
     },
     cell: ({ row }) => {
-      const qty = row.getValue("productStock");
-      return <div className="text-center text-sm font-medium text-gray-600">{qty}</div>;
+      const qty = row.getValue("stock");
+      return (
+        <div className="text-center text-sm font-medium text-gray-600">
+          {qty}
+        </div>
+      );
     },
     enableGlobalFilter: false,
   },
   {
-    accessorKey: "createdBy",
-    header: ({ column }) => {
-      return (
-        <TableOrderButton
-          column={column}
-          text={"Created By"}
-          className="text-center font-semibold text-gray-700"
-        />
-      );
-    },
-  },
-
-  {
     accessorKey: "actions",
     header: "Actions",
-    cell: ({ row }) => {
-      const rowData = row.original;
+    cell: ({row}) => {
+      const id = row.getValue("_id");
       return (
         <div className="flex justify-center gap-4 text-gray-600">
-          <Link to={`/categories/${rowData.id}`} className="hover:text-blue-500">
-            <Eye className="inline-block" size={20} />
-          </Link>
-          <Link to={`/categories`} className="hover:text-green-500">
+          {/* Edit action */}
+          <button
+            className="hover:text-green-500"
+            onClick={() => handleEditCategory(id)}
+          >
             <PencilLine className="inline-block" size={20} />
-          </Link>
-          <Link to={"/"} className="hover:text-red-500">
+          </button>
+
+          {/* Delete action */}
+          <button
+            className="hover:text-red-500"
+            onClick={() => handleDeleteCategory(id)}
+          >
             <Trash2 className="inline-block" size={20} />
-          </Link>
+          </button>
         </div>
       );
     },

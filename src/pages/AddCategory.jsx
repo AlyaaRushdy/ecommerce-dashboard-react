@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { ReusableForm } from "@/components/shared/ReusableForm";
 import Header from "@/components/shared/Header";
+
+
 const CategorySchema = z.object({
   categoryTitle: z.string().min(2, {
     message: "Category Title must be at least 2 characters.",
@@ -33,7 +35,8 @@ export function AddCategory() {
             pageTitle="Add Category"
             schema={CategorySchema}
             onSubmit={handleSubmit}
-            showFileUpload={true}
+            showFileUpload={false}
+            pageName='categories'
           />
         </div>
       </div>

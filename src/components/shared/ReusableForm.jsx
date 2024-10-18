@@ -26,18 +26,59 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
 import { FileUpload } from "@/components/ui/file-upload";
+import { useState } from "react";
+import { toast } from "@/hooks/use-toast";
 
 export function ReusableForm({
   pageTitle,
   schema,
-  onSubmit,
   defaultValues,
   showFileUpload = false,
 }) {
+  const [files, setFiles] = useState([]);
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: defaultValues || {},
   });
+
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+
+      // Append form fields to FormData
+      Object.entries(data).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      // Append files to FormData if available
+      files.forEach((file) => {
+        formData.append("files", file); 
+      });
+      console.log(formData);
+      const response = await fetch("http://localhost:5000/categories", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      const result = await response.json();
+      toast({
+        title: "Success",
+        description: result.message,
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Error",
+        description: "Failed to submit form. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const renderField = (name, field) => {
     let inputComponent;
@@ -109,7 +150,7 @@ export function ReusableForm({
 
   return (
     <Form {...form}>
-      <Card className="w-full max-w-md mx-auto bg-white dark:bg-neutral-950 shadow-lg rounded-lg overflow-hidden">
+      <Card className="w-full max-w-md mx-auto bg-white dark:bg-natural-800 shadow-lg rounded-lg overflow-hidden">
         <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-600 dark:to-red-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center justify-center">
             <Sparkles className="w-6 h-6 mr-2" />
@@ -117,7 +158,11 @@ export function ReusableForm({
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            encType="multipart/form-data"
+            className="space-y-6"
+          >
             <div className="space-y-4">
               {Object.entries(schema.shape).map(([name, field]) =>
                 renderField(name, field)
@@ -125,9 +170,7 @@ export function ReusableForm({
             </div>
             {showFileUpload && (
               <FileUpload
-                maxFiles={5}
-                onFileChange={(files) => console.log(files)}
-                className="p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-md"
+                onChange={(selectedFiles) => setFiles(selectedFiles)}
               />
             )}
             <Button
