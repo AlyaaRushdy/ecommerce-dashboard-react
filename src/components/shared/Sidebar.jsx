@@ -45,7 +45,7 @@ function Sidebar() {
             <NavItem link={"/promotions"} tooltipText={"Promotions"}>
               <Gift />
             </NavItem>
-            <NavItem link={"/settings"} tooltipText={"Settings"}>
+            <NavItem link={"/settings?tab=profile"} tooltipText={"Settings"}>
               <Settings />
             </NavItem>
           </NavigationMenuList>
