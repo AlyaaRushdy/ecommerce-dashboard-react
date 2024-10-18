@@ -29,6 +29,14 @@ const Profile = () => {
       [name]: value,
     }));
   };
+  const handleAddItem = () => {
+  const newItem = {
+    id: items.length + 1,
+    link: onlinePresenceLinkToAdd, // use the user-provided link
+  };
+  setItems([...items, newItem]);
+  setOnlinePresenceLinkToAdd(""); // Clear input after adding
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,15 +47,6 @@ const Profile = () => {
     { id: 1, link: "https://example.com/1" },
     { id: 2, link: "https://example.com/2" },
   ]);
-
-  const handleAddItem = () => {
-    const newItem = {
-      id: items.length + 1,
-      link: `https://example.com/${items.length + 1}`,
-      text: `Link ${items.length + 1}`,
-    };
-    setItems([...items, newItem]);
-  };
 
   return (
     <div>
@@ -161,7 +160,7 @@ const Profile = () => {
         <div className="col-span-2">
           <Button
             type="submit"
-            variant="primary"
+            variant="default"
             className=" bg-background dark:bg-neutral-900 border w-full"
           >
             Submit
@@ -190,10 +189,10 @@ const Profile = () => {
       <div className="mt-8">
         <Sheet>
           <SheetTrigger>
-            <Button className="mb-10" type="primary">
+            <div className="mb-10 flex items-center gap-2 cursor-pointer">
               <Plus />
-              Add Another
-            </Button>
+              <span>Add Another</span>
+            </div>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>Add Online Presence</SheetHeader>
@@ -209,14 +208,17 @@ const Profile = () => {
 
             <SheetFooter>
               <SheetClose>
-                <Button variant="secoundary" className="bg-red-500">
+                <div className="bg-red-500 px-4 py-2 rounded-md text-white cursor-pointer">
                   Cancel
-                </Button>
+                </div>
               </SheetClose>
               <SheetClose>
-                <Button type="primary" onClick={handleAddItem}>
+                <div
+                  className="bg-primary text-white px-4 py-2 rounded-md cursor-pointer"
+                  onClick={handleAddItem}
+                >
                   Save
-                </Button>
+                </div>
               </SheetClose>
             </SheetFooter>
           </SheetContent>

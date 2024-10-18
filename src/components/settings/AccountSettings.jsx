@@ -18,13 +18,11 @@ const AccountSettings = () => {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
-    // Handle the logic for changing the password here
     console.log("Old password: ", oldPassword);
     console.log("New password: ", newPassword);
   };
 
   const handleSave = () => {
-    // Handle the logic for changing the email here
     console.log("New email: ", email);
   };
 
@@ -33,7 +31,6 @@ const AccountSettings = () => {
   };
 
   const handleDelete = () => {
-    // Handle account deletion logic here
     console.log("Account deleted");
     deleteAccountHandler();
     setShowAlert(false); // Close alert after deletion
@@ -44,10 +41,15 @@ const AccountSettings = () => {
       <h1 className="text-xl font-bold mb-10">Account Settings</h1>
       <h2 className="text-xl font-bold mb-10">Email Address</h2>
       <div className="flex justify-between">
-        <p>Your email address is <span className="font-bold">{email}</span></p>
+        <p>
+          Your email address is <span className="font-bold">{email}</span>
+        </p>
         <Sheet>
-          <SheetTrigger>
-            <button className="text-indigo-600 underline">Change</button>
+          {/* Using asChild prop to prevent nesting issues */}
+          <SheetTrigger asChild>
+            <span className="text-indigo-600 underline cursor-pointer">
+              Change
+            </span>
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>Change Email Address</SheetHeader>
@@ -61,12 +63,10 @@ const AccountSettings = () => {
               />
             </div>
             <SheetFooter>
-              <SheetClose>
+              <SheetClose asChild>
                 <Button variant="outline">Cancel</Button>
               </SheetClose>
-              <SheetClose>
-                <Button onClick={handleSave}>Save</Button>
-              </SheetClose>
+              <Button onClick={handleSave}>Save</Button>
             </SheetFooter>
           </SheetContent>
         </Sheet>
@@ -103,9 +103,9 @@ const AccountSettings = () => {
       <div className="mt-20">
         <h2 className="text-xl font-bold mb-6">Delete Account</h2>
         <p className="w-96 leading-8">
-          Would you like to delete yout account? This account contains 1388
+          Would you like to delete your account? This account contains 1388
           posts. Deleting your account will remove all the content associated
-          with it
+          with it.
         </p>
         <button
           className="text-red-900 hover:text-red-600 transition-all duration-200 mt-8"

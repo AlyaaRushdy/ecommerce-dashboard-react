@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React , { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AccountSettings from "@/components/settings/AccountSettings";
 import Notifications from "@/components/settings/Notifications";
@@ -27,12 +27,15 @@ export default function Settings() {
     if (tab && LINKS.some((link) => link.key === tab)) {
       setCurrentTab(tab);
     } else {
-      setCurrentTab("profile"); // Default to 'profile' if no valid tab is specified
+      setCurrentTab("profile");
     }
   }, [location.search]);
 
-  const currentTabComponent = LINKS.find((link) => link.key === currentTab)
-    ?.component || <Profile />;
+const currentTabComponent = React.useMemo(
+  () => LINKS.find((link) => link.key === currentTab)?.component || <Profile />,
+  [currentTab]
+);
+
 
   return (
     <div className="p-5">

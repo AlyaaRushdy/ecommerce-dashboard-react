@@ -18,26 +18,27 @@ const OwnerControl = () => {
   const [lastName, setLastName] = useState("");
 
   const handleAddAdmin = () => {
-    //Add Admin here
+    // Add Admin logic here
   };
 
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="text-xl font-bold mb-10">Owner Controll</h1>
+        <h1 className="text-xl font-bold mb-10">Owner Control</h1>
         <div className="flex justify-between">
           <Sheet>
-            <SheetTrigger>
-              <Button className="mb-10" type="primary">
+            {/* Avoid using a button-like element inside SheetTrigger */}
+            <SheetTrigger asChild>
+              <span className="cursor-pointer text-primary mb-10">
                 Add Admin
-              </Button>
+              </span>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>Add Admin</SheetHeader>
               <div className="space-y-2 my-4 mb-10">
                 <Input
                   type="email"
-                  placeholder="Enter new email"
+                  placeholder="Enter first name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
@@ -46,23 +47,22 @@ const OwnerControl = () => {
               <div className="space-y-2 my-4 mb-10">
                 <Input
                   type="email"
-                  placeholder="Enter new email"
+                  placeholder="Enter last name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
                 />
               </div>
               <SheetFooter>
-                <SheetClose>
-                  <Button variant="secoundary" className="bg-red-500">
+                <SheetClose asChild>
+                  {/* Ensure buttons are not nested directly inside another button */}
+                  <Button variant="secondary" className="bg-red-500">
                     Cancel
                   </Button>
                 </SheetClose>
-                <SheetClose>
-                  <Button type="primary" onClick={handleAddAdmin}>
-                    Save
-                  </Button>
-                </SheetClose>
+                <Button type="primary" onClick={handleAddAdmin}>
+                  Save
+                </Button>
               </SheetFooter>
             </SheetContent>
           </Sheet>
