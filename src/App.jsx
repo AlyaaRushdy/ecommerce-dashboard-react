@@ -16,6 +16,7 @@ import OrderDetails from "./pages/OrderDetails";
 import Login from "./pages/Login";
 import { Toaster } from "./components/ui/toaster";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditCategory from "./pages/EditCategory";
 
 function App() {
   return (
@@ -60,6 +61,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AddCategory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/categories/edit/:id"
+            element={
+              <ProtectedRoute>
+                <EditCategory />
               </ProtectedRoute>
             }
           />

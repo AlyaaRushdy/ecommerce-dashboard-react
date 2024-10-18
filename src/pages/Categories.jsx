@@ -1,41 +1,65 @@
+import {useState , useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Header from "@/components/shared/Header";
 import DataTable from "@/components/shared/DataTable";
-import { categoriesColumns } from "@/data table columns/categoriesColumns";
-import {useState , useEffect} from 'react';
-import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { toast } from "@/hooks/use-toast";
+import categoriesColumns from '@/data table columns/categoriesColumns';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/categories")
-      .then((res) => {
-        if(res.status===200){
-          setCategories(res.data.categories)}    
-        }
-      )
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [categories]);
+    fetchCategories();
+  }, []);
 
-  // Handle delete request to backend
-  const handleDeleteCategory = (id) => {
+  const fetchCategories = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get("http://localhost:5000/categories");
+      if (response.status === 200) {
+        setCategories(response.data.categories);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch categories. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleDeleteCategory = async (id) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
-      axios
-        .delete(`http://localhost:5000/categories/${id}`)
-        .catch((err) => {
-          console.log("Error deleting category:", err);
+      try {
+        const response = await axios.delete(
+          `http://localhost:5000/categories/${id}`
+        );
+        if (response.status === 200) {
+          toast({
+            title: "Success",
+            description: "Category deleted successfully.",
+          });
+          fetchCategories(); // Refresh the categories list
+        }
+      } catch (error) {
+        console.error("Error deleting category:", error);
+        toast({
+          title: "Error",
+          description: "Failed to delete category. Please try again.",
+          variant: "destructive",
         });
+      }
     }
   };
 
-  // Navigate to the edit page for a specific category
   const handleEditCategory = (id) => {
-  Navigate(`/categories/edit/${id}`);
-};
+    navigate(`/categories/edit/${id}`);
+  };
 
   return (
     <>
@@ -52,6 +76,7 @@ function Categories() {
             data={categories}
             tableTitle={"All Categories"}
             className="py-4"
+            isLoading={isLoading}
           />
         </div>
       </div>
@@ -59,5 +84,6 @@ function Categories() {
     </>
   );
 }
+
 
 export default Categories;

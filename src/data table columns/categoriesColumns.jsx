@@ -1,55 +1,47 @@
-import TableOrderButton from "@/components/tableOrderButton";
-import { Trash2, PencilLine} from "lucide-react";
 
-export const categoriesColumns = (handleEditCategory, handleDeleteCategory) => [
+import TableOrderButton from "@/components/tableOrderButton";
+import { Trash2, PencilLine } from "lucide-react";
+
+const categoriesColumns = (handleEditCategory, handleDeleteCategory) => [
   {
     accessorKey: "_id",
-    header: ({ column }) => {
-      return (
-        <TableOrderButton
-          column={column}
-          text={"Category ID"}
-          className="text-center font-semibold text-gray-700"
-        />
-      );
-    },
+    header: ({ column }) => (
+      <TableOrderButton
+        column={column}
+        text={"Category ID"}
+        className="text-center font-semibold text-gray-700"
+      />
+    ),
   },
   {
     accessorKey: "categoryTitle",
-    header: ({ column }) => {
-      return (
-        <TableOrderButton
-          column={column}
-          text={"Name"}
-          className="text-center font-semibold text-gray-700"
-        />
-      );
-    },
+    header: ({ column }) => (
+      <TableOrderButton
+        column={column}
+        text={"Name"}
+        className="text-center font-semibold text-gray-700"
+      />
+    ),
   },
-
   {
     accessorKey: "description",
-    header: ({ column }) => {
-      return (
-        <TableOrderButton
-          column={column}
-          text={"Description"}
-          className="text-center font-semibold text-gray-700"
-        />
-      );
-    },
+    header: ({ column }) => (
+      <TableOrderButton
+        column={column}
+        text={"Description"}
+        className="text-center font-semibold text-gray-700"
+      />
+    ),
   },
   {
     accessorKey: "stock",
-    header: ({ column }) => {
-      return (
-        <TableOrderButton
-          column={column}
-          text={"Product Stock"}
-          className="text-center font-semibold text-gray-700"
-        />
-      );
-    },
+    header: ({ column }) => (
+      <TableOrderButton
+        column={column}
+        text={"Product Stock"}
+        className="text-center font-semibold text-gray-700"
+      />
+    ),
     cell: ({ row }) => {
       const qty = row.getValue("stock");
       return (
@@ -63,19 +55,16 @@ export const categoriesColumns = (handleEditCategory, handleDeleteCategory) => [
   {
     accessorKey: "actions",
     header: "Actions",
-    cell: ({row}) => {
-      const id = row.getValue("_id");
+    cell: ({ row }) => {
+      const id = row.original._id;
       return (
         <div className="flex justify-center gap-4 text-gray-600">
-          {/* Edit action */}
           <button
             className="hover:text-green-500"
             onClick={() => handleEditCategory(id)}
           >
             <PencilLine className="inline-block" size={20} />
           </button>
-
-          {/* Delete action */}
           <button
             className="hover:text-red-500"
             onClick={() => handleDeleteCategory(id)}
@@ -88,3 +77,5 @@ export const categoriesColumns = (handleEditCategory, handleDeleteCategory) => [
     enableGlobalFilter: false,
   },
 ];
+
+export default categoriesColumns;

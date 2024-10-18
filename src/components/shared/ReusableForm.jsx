@@ -31,9 +31,11 @@ import { toast } from "@/hooks/use-toast";
 
 export function ReusableForm({
   pageTitle,
+  pageName,
   schema,
   defaultValues,
   showFileUpload = false,
+  onSubmit,
 }) {
   const [files, setFiles] = useState([]);
 
@@ -42,7 +44,7 @@ export function ReusableForm({
     defaultValues: defaultValues || {},
   });
 
-  const onSubmit = async (data) => {
+  const handleSubmit = async (data) => {
     try {
       const formData = new FormData();
 
@@ -53,23 +55,10 @@ export function ReusableForm({
 
       // Append files to FormData if available
       files.forEach((file) => {
-        formData.append("files", file); 
-      });
-      console.log(formData);
-      const response = await fetch("http://localhost:5000/categories", {
-        method: "POST",
-        body: formData,
+        formData.append("files", file);
       });
 
-      if (!response.ok) {
-        throw new Error("Form submission failed");
-      }
-
-      const result = await response.json();
-      toast({
-        title: "Success",
-        description: result.message,
-      });
+      await onSubmit(formData);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
@@ -159,7 +148,7 @@ export function ReusableForm({
         </CardHeader>
         <CardContent className="p-6">
           <form
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(handleSubmit)}
             encType="multipart/form-data"
             className="space-y-6"
           >
