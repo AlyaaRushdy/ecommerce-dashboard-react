@@ -14,10 +14,26 @@ import {
 import Header from "../components/shared/Header";
 import { BellRing } from "lucide-react";
 import DataTable from "@/components/shared/DataTable";
-import { productsColumns } from "@/data table columns/productsColumns";
-import { productsArray } from "@/test arrays/products";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import productsColumns from "@/data table columns/productsColumns";
 
 export default function CardWithForm() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/products/")
+      .then((res) => res.data)
+      .then((res) => {
+        setProducts(res.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const notifications = [
     {
       title: "Your call has been confirmed.",
@@ -50,6 +66,7 @@ export default function CardWithForm() {
   };
   return (
     <main className="p-5">
+      {console.log(products)}
       <Header currentPage={"Producst"} />
 
       {/* start card */}
@@ -138,9 +155,11 @@ export default function CardWithForm() {
 
       <div>
         <DataTable
-          columns={productsColumns}
-          data={productsArray}
+          columns={productsColumns()}
+          data={products}
           tableTitle={"All Products"}
+          ButtonLink={"/products/addProduct"}
+          ButtonText={"Add Product"}
         />
       </div>
     </main>
