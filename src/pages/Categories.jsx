@@ -1,10 +1,10 @@
-import {useState , useEffect} from 'react';
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "@/components/shared/Header";
 import DataTable from "@/components/shared/DataTable";
 import { toast } from "@/hooks/use-toast";
-import categoriesColumns from '@/data table columns/categoriesColumns';
+import categoriesColumns from "@/data table columns/categoriesColumns";
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -20,6 +20,7 @@ function Categories() {
     try {
       const response = await axios.get("http://localhost:5000/categories");
       if (response.status === 200) {
+        
         if (response.data.categories && response.data.categories.length === 0) {
           setCategories([]);
         } else {
@@ -28,6 +29,7 @@ function Categories() {
       }
     } catch (error) {
       console.error("Error fetching categories:", error);
+
       if (error.response) {
         toast({
           title: "Error",
@@ -51,7 +53,7 @@ function Categories() {
             title: "Success",
             description: "Category deleted successfully.",
           });
-          fetchCategories(); 
+          fetchCategories(); // Refresh the categories list
         }
       } catch (error) {
         console.error("Error deleting category:", error);
@@ -91,6 +93,5 @@ function Categories() {
     </>
   );
 }
-
 
 export default Categories;

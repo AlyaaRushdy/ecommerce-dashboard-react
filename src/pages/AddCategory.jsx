@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { ReusableForm } from "@/components/shared/ReusableForm";
 import Header from "@/components/shared/Header";
-
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const CategorySchema = z.object({
   categoryTitle: z.string().min(2, {
@@ -17,9 +19,31 @@ const CategorySchema = z.object({
 });
 
 export function AddCategory() {
-  const handleSubmit = (data) => {
-    console.log("Category Data:", data);
-    // Handle category submission
+  const navigate = useNavigate();
+
+  const handleSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/categories",
+        data
+      );
+      if (response.status === 201) {
+        toast({
+          title: "Success",
+          description: "Category added successfully.",
+        });
+        setTimeout(() => {
+          navigate("/categories");
+        }, 500); 
+      }
+    } catch (error) {
+      console.error("Error creating category:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create category. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -36,7 +60,7 @@ export function AddCategory() {
             schema={CategorySchema}
             onSubmit={handleSubmit}
             showFileUpload={false}
-            pageName='categories'
+            pageName="categories"
           />
         </div>
       </div>
