@@ -17,7 +17,7 @@ import Login from "./pages/Login";
 import { Toaster } from "./components/ui/toaster";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EditCategory from "./pages/EditCategory";
-import AddPromotion from "./pages/AddPromotion";
+import AddPromotion from "./pages/AddPromotions";
 
 function App() {
   return (
