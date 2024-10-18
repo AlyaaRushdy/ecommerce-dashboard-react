@@ -8,10 +8,10 @@ import Reports from "./pages/Reports";
 import Promotions from "./pages/Promotions";
 import Settings from "./pages/Settings";
 import Sidebar from "./components/shared/Sidebar";
-import CustomerDetails from "./pages/CustomerDetails";
+// import CustomerDetails from "./pages/CustomerDetails";
 import ErrorPage from "./pages/ErrorPage";
 import SingleProduct from "./pages/SingleProduct";
-import AddCategory from "./pages/AddCategory";
+// import AddCategory from "./pages/AddCategory";
 import OrderDetails from "./pages/OrderDetails";
 
 function App() {
@@ -24,11 +24,11 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/categories" element={<Categories />} />
-          <Route path="/categories/create" element={<AddCategory />} />
+          {/* <Route path="/categories/create" element={<AddCategory />} /> */}
           <Route path="/orders" element={<Orders />} />
           <Route path="/orders/:id" element={<OrderDetails />} />
           <Route path="/customers" element={<Customers />} />
-          <Route path="/customers/:customerId" element={<CustomerDetails />} />
+          {/* <Route path="/customers/:customerId" element={<CustomerDetails />} /> */}
           <Route path="/reports" element={<Reports />} />
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/settings" element={<Settings />} />
