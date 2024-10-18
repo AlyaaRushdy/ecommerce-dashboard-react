@@ -21,7 +21,7 @@ function Customers() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [customers]);
 
   return (
     <>

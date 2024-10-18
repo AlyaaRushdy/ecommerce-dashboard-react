@@ -88,13 +88,6 @@ export const orderColumns = (handleStatusUpdate) => [
     },
   },
 
-
-
-
-
-
-
-
   {
     accessorKey: "status",
     header: ({ column }) => {
@@ -116,11 +109,6 @@ export const orderColumns = (handleStatusUpdate) => [
       );
     },
   },
-
-
-
-
-
 
 
   {

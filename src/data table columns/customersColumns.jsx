@@ -1,5 +1,6 @@
 import TableOrderButton from "@/components/tableOrderButton";
 import { Button } from "@/components/ui/button";
+import store from "@/store/store";
 import axios from "axios";
 import { Ban } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -119,13 +120,16 @@ export const columns = [
             variant={"link"}
             className="text-muted-foreground hover:text-red-600"
             onClick={(e) => {
+              const { token } = store.getState().user;
               e.preventDefault();
-              console.log("clicked");
-              console.log(
-                `http://localhost:5000/users/banAccount/${rowData.id}`
-              );
               axios
-                .put(`http://localhost:5000/users/banAccount/${rowData.id}`)
+                .put(
+                  `http://localhost:5000/users/banAccount/${rowData.id}`,
+                  "test",
+                  {
+                    headers: { Authorization: `Bearer ${token}` },
+                  }
+                )
                 .catch((err) => {
                   console.log(err.response);
                 });
