@@ -13,8 +13,23 @@ import {
 import NavSheet from "./NavSheet";
 import HeaderBreadcrumb from "../HeaderBreadcrumb";
 import DateRangePicker from "../DateRangePicker";
+import { useDispatch } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
+import { setToken } from "@/slices/userSlice";
 
 function Header({ currentPage, prevPage, prevPageLink }) {
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(setToken(""));
+    toast({
+      variant: "success",
+      title: "logged out successfully",
+    });
+  };
+
   return (
     <header className="flex justify-between items-center pb-1 gap-2">
       <NavSheet />
@@ -43,7 +58,16 @@ function Header({ currentPage, prevPage, prevPageLink }) {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <button
+                className={"w-full text-left"}
+                onClick={(e) => {
+                  handleLogout(e);
+                }}
+              >
+                Logout
+              </button>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <ModeToggle />
