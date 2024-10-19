@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import EditCategory from "./pages/EditCategory";
 import AddPromotion from "./pages/AddPromotions";
 import Contact from "./pages/Contact";
+import AddAdmin from "./pages/AddAdmin";
 
 function App() {
   return (
@@ -138,6 +139,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/settings/addAdmin"
+            element={
+              <ProtectedRoute>
+                <AddAdmin />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="*"
@@ -148,7 +157,7 @@ function App() {
             }
           />
 
-      <Route
+          <Route
             path="/contact"
             element={
               <ProtectedRoute>
@@ -156,7 +165,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
         </Routes>
       </main>
       <Toaster />
