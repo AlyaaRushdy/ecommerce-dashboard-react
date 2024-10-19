@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,10 +22,17 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
+import { Sparkles, CalendarIcon } from "lucide-react";
 import { FileUpload } from "@/components/ui/file-upload";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
 
 export function ReusableForm({
   pageTitle,
@@ -39,20 +44,36 @@ export function ReusableForm({
 }) {
   const [files, setFiles] = useState([]);
 
+  const getSchemaShape = (schema) => {
+    if (schema instanceof z.ZodEffects) {
+      return getSchemaShape(schema._def.schema);
+    }
+    return schema.shape;
+  };
+
+  const schemaShape = getSchemaShape(schema);
+
+
   const form = useForm({
-    resolver: zodResolver(schema),
+    resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: defaultValues || {},
   });
 
   const handleSubmit = async (data) => {
     try {
+      console.log("Form Values: ", form.getValues());
+
       const formData = new FormData();
 
       // Append form fields to FormData
       Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
+        if (value instanceof Date) {
+          formData.append(key, format(value, "yyyy-MM-dd"));
+        } else {
+          formData.append(key, value);
+        }
       });
-
+      console.log([...formData.entries()]);
       // Append files to FormData if available
       files.forEach((file) => {
         formData.append("files", file);
@@ -121,6 +142,32 @@ export function ReusableForm({
           </SelectContent>
         </Select>
       );
+    } else if (field instanceof z.ZodDate) {
+      inputComponent = (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={`w-full justify-start text-left font-normal ${
+                !form.getValues(name) && "text-muted-foreground"
+              }`}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {form.getValues(name)
+                ? format(form.getValues(name), "PPP")
+                : `Select ${name}`}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={form.getValues(name)}
+              onSelect={(date) => form.setValue(name, date)}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+      );
     } else {
       inputComponent = (
         <Input placeholder={`Enter ${name}`} {...form.register(name)} />
@@ -161,8 +208,12 @@ export function ReusableForm({
             className="space-y-6"
           >
             <div className="space-y-4">
-              {Object.entries(schema.shape).map(([name, field]) =>
-                renderField(name, field)
+              {schemaShape && Object.keys(schemaShape).length > 0 ? (
+                Object.entries(schemaShape).map(([name, field]) =>
+                  renderField(name, field)
+                )
+              ) : (
+                <p>No form fields defined</p>
               )}
             </div>
             {showFileUpload && (

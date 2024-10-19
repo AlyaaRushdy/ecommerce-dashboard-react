@@ -1,22 +1,22 @@
 import TableOrderButton from "@/components/tableOrderButton";
-import { Eye, PencilLine, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { PencilLine, Trash2 } from "lucide-react";
 
-export const promotionsCoulmns = [
+const promotionsCoulmns = (handleDeleteCoupon, handleEditCoupon) => [
   {
-    accessorKey: "id",
+    accessorKey: "_id",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Coupon ID"} />;
     },
   },
   {
-    accessorKey: "code",
+    accessorKey: "name",
     header: ({ column }) => {
-      return <TableOrderButton column={column} text={"Code"} />;
+      return <TableOrderButton column={column} text={"Title"} />;
     },
+    enableGlobalFilter: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "discountStatus",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Status"} />;
     },
@@ -40,7 +40,7 @@ export const promotionsCoulmns = [
     },
   },
   {
-    accessorKey: "discountValue",
+    accessorKey: "discount",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Discount Value"} />;
     },
@@ -49,24 +49,26 @@ export const promotionsCoulmns = [
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const rowData = row.original;
+      const id = row.original._id;
       return (
-        <div className="flex gap-4">
-          <Link to={`/users/${rowData.id}`}>
-            <Eye className="inline-block text-muted-foreground" size={20} />
-          </Link>
-          <Link to={`/users`}>
-            <PencilLine
-              className="inline-block text-muted-foreground"
-              size={20}
-            />
-          </Link>
-          <Link to={"/"}>
-            <Trash2 className="inline-block text-muted-foreground" size={20} />
-          </Link>
+        <div className="flex justify-center gap-4 text-gray-600">
+          <button
+            className="hover:text-green-500"
+            onClick={() => handleEditCoupon(id)}
+          >
+            <PencilLine className="inline-block" size={20} />
+          </button>
+          <button
+            className="hover:text-red-500"
+            onClick={() => handleDeleteCoupon(id)}
+          >
+            <Trash2 className="inline-block" size={20} />
+          </button>
         </div>
       );
     },
     enableGlobalFilter: false,
   },
 ];
+
+export default promotionsCoulmns;

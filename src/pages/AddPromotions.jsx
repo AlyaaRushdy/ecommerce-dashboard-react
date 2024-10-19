@@ -1,84 +1,89 @@
+import { z } from "zod";
+import { ReusableForm } from "@/components/shared/ReusableForm";
 import Header from "@/components/shared/Header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
-const AddPromotion = () => {
-  const [startDate, setStartDate] = useState("");
+const PromotionSchema = z
+  .object({
+    Name: z.string().min(2, {
+      message: "Promotion title must be at least 2 characters.",
+    }),
+    discount: z
+      .number()
+      .positive({
+        message: "Discount must be a positive number.",
+      })
+      .min(0.01, {
+        message: "Discount cannot be less than 0.01.",
+      }),
+    "Discount Status": z.enum(["active", "pending", "expired"]).optional(),
+    "Start Date": z.date({
+      required_error: "Start date is required",
+      invalid_type_error: "That's not a valid date!",
+    }),
+    "End Date": z.date({
+      required_error: "End date is required",
+      invalid_type_error: "That's not a valid date!",
+    }),
+  })
+  .refine((data) => data["End Date"] > data["Start Date"], {
+    message: "End date must be later than start date",
+    path: ["End Date"],
+  });
+
+export default function AddPromotion() {
+  const navigate = useNavigate();
+
+  // Submission handler for form
+  const handleSubmit = async (data) => {
+    
+    try {
+      const response = await axios.post("http://localhost:5000/coupons", data);
+      console.log(data);
+      if (response.status === 201) {
+        toast({
+          title: "Success",
+          description: "Promotion added successfully.",
+        });
+        setTimeout(() => navigate("/promotions"), 500);
+      }
+    } catch (error) {
+      console.error("Error creating promotion:", error);
+      toast({
+        title: "Error",
+        description: "Failed to create promotion. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="p-5">
-      <Header currentPage={"Create Promotion"} prevPage={"Promotion"} prevPageLink={"/promotions"} />
-      <div className="grid gap-4 grid-cols-12 mt-10">
-        <div className="card md:col-span-4 lg:col-span-4 col-span-12 ">
-          <div className="mb-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Coupon Status</CardTitle>
-              </CardHeader>
-              <CardContent className="grid gap-4">
-                <div className=" flex items-center space-x-4 mt-4">
-                  <span>Active</span>
-                  <span>InActive</span>
-                  <span>Future plan</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Date Schedule</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="">
-                <label htmlFor="startDate" className="block mb-2">
-                  Start Date
-                </label>
-                <Input
-                  type="string"
-                  placeholder="Enter new startdate"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="">
-                <label htmlFor="startDate" className="block mb-2">
-                  End Date
-                </label>
-                <Input
-                  type="string"
-                  placeholder="Enter new startdate"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  required
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="card md:col-span-8 lg:col-span-8 col-span-12">
-          <Card>
-            <CardHeader>
-              <CardTitle>Coupon Informations</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className=" flex items-center space-x-4 mt-4">
-                <span>Active</span>
-                <span>InActive</span>
-                <span>Future plan</span>
-              </div>
-              <div className="p">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque
-                dolore tenetur esse soluta sed, minima exercitationem
-                consequatur quam eaque excepturi vitae! Alias ea velit illo,
-                consequuntur animi quaerat provident itaque.
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+      <Header
+        currentPage="Create Promotion"
+        prevPage="Promotions"
+        prevPageLink="/promotions"
+      />
+      <div className="py-4">
+        <ReusableForm
+          pageTitle="Add Promotion"
+          schema={PromotionSchema}
+          onSubmit={handleSubmit}
+          showFileUpload={false}
+          pageName="promotions"
+          defaultValues={{
+            Name: "",
+            discount: 0,
+            "Discount Status": "pending",
+            "Start Date": new Date(),
+            "End Date": new Date(
+              new Date().setMonth(new Date().getMonth() + 1)
+            ),
+          }}
+        />
       </div>
     </div>
   );
-};
-
-export default AddPromotion;
+}
