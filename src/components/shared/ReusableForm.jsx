@@ -81,6 +81,14 @@ export function ReusableForm({
             className="resize-none"
           />
         );
+      } else if (field.description === "password") {
+        inputComponent = (
+          <Input
+            placeholder={`Enter ${name}`}
+            {...form.register(name)}
+            type="password"
+          />
+        );
       } else {
         inputComponent = (
           <Input placeholder={`Enter ${name}`} {...form.register(name)} />
