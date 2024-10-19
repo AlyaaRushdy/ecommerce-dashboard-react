@@ -1,30 +1,42 @@
 import TableOrderButton from "@/components/tableOrderButton";
 import { Button } from "@/components/ui/button";
-import store from "@/store/store";
-import axios from "axios";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
 import { Ban } from "lucide-react";
 import { Link } from "react-router-dom";
+
+// const getStatusClass = (status) => {
+//   switch (status) {
+//     case "active":
+//       // return "text-green-500";
+//       return "text-white bg-green-500 rounded-full px-2 py-0.5 text-sm";
+//     case "canceled":
+//     case "banned":
+//       // return "text-red-500";
+//       return "text-white bg-red-500 rounded-full px-2 py-0.5 text-sm";
+
+//     default:
+//       return "";
+//   }
+// };
 
 const getStatusClass = (status) => {
   switch (status) {
     case "active":
-      // return "text-green-500";
-      return "text-white bg-green-500 rounded-full px-2 py-0.5 text-sm";
-    case "canceled":
+      return "text-green-600";
+    case "deleted":
     case "banned":
-      // return "text-red-500";
-      return "text-white bg-red-500 rounded-full px-2 py-0.5 text-sm";
-
+      return "text-red-600";
     default:
       return "";
   }
 };
 
-export const columns = [
-  // {
-  //   accessorKey: "id",
-  //   header: "ID",
-  // },
+export const customerColumns = (handleBanUser) => [
   {
     accessorKey: "fullName",
     // sortingFn: "infoSortingFunction",
@@ -39,8 +51,6 @@ export const columns = [
   },
   {
     accessorKey: "email",
-    // sortingFn: "infoSortingFunction",
-    // filterFn: "infoFilteringFunction",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Email"} />;
     },
@@ -82,62 +92,42 @@ export const columns = [
     sortingFn: "datetime",
     enableGlobalFilter: false,
   },
-  // {
-  //   accessorKey: "totalOrders",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"Total Orders"} />;
-  //   },
-  //   cell: ({ row }) => {
-  //     const orders = row.getValue("totalOrders");
-  //     return <p className="text-center">{orders}</p>;
-  //   },
-  //   enableGlobalFilter: false,
-  // },
-  // {
-  //   accessorKey: "totalExpense",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"Total Expense"} />;
-  //   },
-  //   cell: ({ row }) => {
-  //     const amount = parseFloat(row.getValue("totalExpense"));
-  //     const formatted = new Intl.NumberFormat("en-GB", {
-  //       style: "currency",
-  //       currency: "GBP",
-  //     }).format(amount);
-
-  //     return <div className="font-medium">E{formatted}</div>;
-  //   },
-  //   enableGlobalFilter: false,
-  // },
   {
     accessorKey: "actions",
     header: "Actions",
     cell: ({ row }) => {
       const rowData = row.original;
       return (
-        <div className="flex gap-4">
-          <Button
-            variant={"link"}
-            className="text-muted-foreground hover:text-red-600"
-            onClick={(e) => {
-              const { token } = store.getState().user;
-              e.preventDefault();
-              axios
-                .put(
-                  `http://localhost:5000/users/banAccount/${rowData.id}`,
-                  "test",
-                  {
-                    headers: { Authorization: `Bearer ${token}` },
-                  }
-                )
-                .catch((err) => {
-                  console.log(err.response);
-                });
-            }}
-          >
-            <Ban size={20} />
-          </Button>
-        </div>
+        <>
+          {rowData.accountStatus == "deleted" ? (
+            <Button
+              variant={"link"}
+              className="text-muted-foreground hover:text-red-600 cursor-not-allowed"
+              disabled
+            >
+              <Ban size={20} />
+            </Button>
+          ) : (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipContent>
+                  <span>Ban User</span>
+                </TooltipContent>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant={"link"}
+                    className="text-muted-foreground hover:text-red-600"
+                    onClick={(e) => {
+                      handleBanUser(e, rowData.id);
+                    }}
+                  >
+                    <Ban size={20} />
+                  </Button>
+                </TooltipTrigger>
+              </Tooltip>
+            </TooltipProvider>
+          )}
+        </>
       );
     },
     enableGlobalFilter: false,
