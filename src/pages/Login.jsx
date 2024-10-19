@@ -71,6 +71,12 @@ function Login() {
             title: err.response.data.message,
             // action: <ToastAction altText="Try again">Try again</ToastAction>,
           });
+        } else if (err.response.status == 403) {
+          toast({
+            variant: "destructive",
+            title: err.response.data.message,
+            // action: <ToastAction altText="Try again">Try again</ToastAction>,
+          });
         } else {
           console.log("err", err);
         }
