@@ -74,7 +74,11 @@ export const adminsColumns = (handleDeleteAdmin) => [
     },
     cell: ({ row }) => {
       const date = row.getValue("lastLoginDate");
-      return <div className="font-medium">{new Date(date).toDateString()}</div>;
+      return (
+        <div className="font-medium">
+          {date ? new Date(date).toDateString() : "-"}
+        </div>
+      );
     },
     sortingFn: "datetime",
     enableGlobalFilter: false,
