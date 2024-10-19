@@ -50,7 +50,7 @@ const Profile = () => {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-10">Public Profile</h1>
+      <h1 className="text-xl font-bold mb-10"> Profile</h1>
       <div className="flex gap-8 items-center mb-16">
         <Avatar className="hidden h-36 w-36 sm:flex">
           <AvatarImage
@@ -68,9 +68,9 @@ const Profile = () => {
             >
               Change Picture
             </Button>
-            <Button variant="secondary" className="dark:bg-red-800">
+            {/* <Button variant="secondary" className="dark:bg-red-800">
               Delete Picture
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ const Profile = () => {
           </Button>
         </div>
       </form>
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         <h2 className="text-lg font-semibold">Online Presence</h2>
         {items.map((item) => (
           <div
@@ -184,8 +184,8 @@ const Profile = () => {
             </a>
           </div>
         ))}
-      </div>
-
+      </div> */}
+{/* 
       <div className="mt-8">
         <Sheet>
           <SheetTrigger>
@@ -223,7 +223,7 @@ const Profile = () => {
             </SheetFooter>
           </SheetContent>
         </Sheet>
-      </div>
+      </div> */}
     </div>
   );
 };

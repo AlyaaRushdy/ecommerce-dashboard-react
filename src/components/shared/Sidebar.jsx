@@ -19,11 +19,11 @@ function Sidebar() {
   return (
     <>
       <ScrollArea
-        className="w-0 sm:w-24 md:w-28 bg-primary h-screen fixed left-0 top-0 pb-2"
+        className="w-0 sm:w-24 md:w-28 bg-primary h-screen fixed left-0 top-0 py-2"
         style={{ position: "fixed" }}
       >
-        <NavigationMenu className="mx-auto pt-4 my-24" orientation="vertical">
-          <NavigationMenuList className="flex-col gap-4 justify-center">
+        <NavigationMenu className="mx-auto pt-4 h-full" orientation="vertical">
+          <NavigationMenuList className="flex-col gap-4 justify-center items-center">
             <NavItem link={"/"} tooltipText={"Dashboard"}>
               <House />
             </NavItem>

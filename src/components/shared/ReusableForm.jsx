@@ -81,6 +81,14 @@ export function ReusableForm({
             className="resize-none"
           />
         );
+      } else if (field.description === "password") {
+        inputComponent = (
+          <Input
+            placeholder={`Enter ${name}`}
+            {...form.register(name)}
+            type="password"
+          />
+        );
       } else {
         inputComponent = (
           <Input placeholder={`Enter ${name}`} {...form.register(name)} />
@@ -139,7 +147,7 @@ export function ReusableForm({
 
   return (
     <Form {...form}>
-      <Card className="w-full max-w-md mx-auto bg-white dark:bg-natural-800 shadow-lg rounded-lg overflow-hidden">
+      <Card className="w-full max-w-md mx-auto bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
         <CardHeader className="bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-600 dark:to-red-600 p-6">
           <CardTitle className="text-2xl font-bold text-white flex items-center justify-center">
             <Sparkles className="w-6 h-6 mr-2" />

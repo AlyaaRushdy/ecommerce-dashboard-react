@@ -33,7 +33,7 @@ export default function DatePickerWithRange({ className }) {
   };
 
   return (
-    <div className={cn("grid gap-2 sm:block hidden", className)}>
+    <div className={cn("gap-2 sm:block hidden", className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -80,11 +80,11 @@ export default function DatePickerWithRange({ className }) {
             defaultMonth={date?.from}
             selected={date}
             onSelect={handleSelect}
-            numberOfMonths={2}
+            numberOfMonths={1}
             disabled={(date) => date > today}
             className="sm:flex hidden"
           />
-          <Calendar
+          {/* <Calendar
             initialFocus
             mode="range"
             defaultMonth={date?.from}
@@ -93,7 +93,7 @@ export default function DatePickerWithRange({ className }) {
             numberOfMonths={1}
             disabled={(date) => date > today}
             className="sm:hidden"
-          />
+          /> */}
         </PopoverContent>
       </Popover>
     </div>
