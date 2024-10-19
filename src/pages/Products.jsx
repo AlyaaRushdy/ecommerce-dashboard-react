@@ -67,7 +67,7 @@ export default function CardWithForm() {
   return (
     <main className="p-5">
       {console.log(products)}
-      <Header currentPage={"Producst"} />
+      <Header currentPage={"Products"} />
 
       {/* start card */}
       <section className="row py-4 grid grid-cols-12 gap-4">
