@@ -39,6 +39,9 @@ export const orderColumns = (handleStatusUpdate) => [
       return <Link to={`/orders/${id}`}>{id}</Link>;
     },
   },
+
+
+
   {
     accessorKey: "products",
     header: ({ column }) => {
@@ -51,11 +54,12 @@ export const orderColumns = (handleStatusUpdate) => [
       );
     },
   },
+
+
   {
     accessorKey: "quantity",
-    header: ({ column }) => {
-      return <TableOrderButton column={column} text={"Quantity"} />;
-    },
+    header: "Quantity",
+  
     cell: ({ row }) => {
       const productsArray = row.getValue("products");
       const totalQuantity = productsArray.reduce((prev, curr) => {
@@ -65,6 +69,7 @@ export const orderColumns = (handleStatusUpdate) => [
       return <div className="font-medium">{totalQuantity + " Items"}</div>;
     },
   },
+  
   {
     accessorKey: "createdAt",
     header: ({ column }) => {
@@ -86,6 +91,17 @@ export const orderColumns = (handleStatusUpdate) => [
       const customer = row.getValue("userName");
       return <Link to={`/customers/${row.original.userId}`}>{customer}</Link>;
     },
+  },
+
+
+
+
+  {
+    accessorKey: "userEmail",
+    header: ({ column }) => {
+      return <TableOrderButton column={column} text={"Email"} />;
+    },
+   
   },
 
   {
@@ -128,4 +144,22 @@ export const orderColumns = (handleStatusUpdate) => [
     enableGlobalFilter: false,
   },
  
+  {
+    accessorKey: "shippingCity",
+    header: ({ column }) => {
+      return <TableOrderButton column={column} text={"City"} />;
+    },
+   
+  }
+
+
+
+
+
+
+
+
+
+
+
 ];
