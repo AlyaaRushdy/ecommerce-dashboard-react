@@ -1,37 +1,51 @@
-import { ownerControllCoulmns } from "@/data table columns/ownerControllerCoulmns";
+import { useEffect, useState } from "react";
 import DataTable from "../shared/DataTable";
-import { ownersControllArray } from "@/test arrays/ownerControll";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTrigger,
-} from "../ui/sheet";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { useState } from "react";
+import { adminsColumns } from "@/data table columns/AdminsColumns";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const OwnerControl = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [admins, setAdmins] = useState([]);
+  const [refresh, setRefresh] = useState(true);
+  const { token } = useSelector((state) => state.user);
 
-  const handleAddAdmin = () => {
-    // Add Admin logic here
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/admins/")
+      .then((res) => res.data)
+      .then((res) => {
+        setAdmins(res.admins);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [refresh]);
+
+  const handleDeleteAdmin = (e, id) => {
+    e.preventDefault();
+    axios
+      .put(`http://localhost:5000/admins/deleteAccount/${id}`, "", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        setRefresh(!refresh);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   return (
     <div>
-      <div className="flex justify-between">
-        <h1 className="text-xl font-bold mb-10">Owner Control</h1>
-        <div className="flex justify-between">
+      {/* <div className="flex justify-between">
+        {console.log(admins)}
+        <h1 className="text-xl font-bold mb-10">Owner Control</h1> */}
+      {/* <div className="flex justify-between">
           <Sheet>
-            {/* Avoid using a button-like element inside SheetTrigger */}
             <SheetTrigger asChild>
-              <button className="cursor-pointer text-primary mb-10">
+              <span className="cursor-pointer text-primary mb-10">
                 Add Admin
-              </button>
+              </span>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>Add Admin</SheetHeader>
@@ -55,7 +69,6 @@ const OwnerControl = () => {
               </div>
               <SheetFooter>
                 <SheetClose asChild>
-                  {/* Ensure buttons are not nested directly inside another button */}
                   <Button variant="secondary" className="bg-red-500">
                     Cancel
                   </Button>
@@ -66,12 +79,14 @@ const OwnerControl = () => {
               </SheetFooter>
             </SheetContent>
           </Sheet>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       <DataTable
-        columns={ownerControllCoulmns}
-        data={ownersControllArray}
+        columns={adminsColumns(handleDeleteAdmin)}
+        data={admins}
         tableTitle={"All Admins"}
+        ButtonText={"Add Admin"}
+        ButtonLink={"/settings/addAdmin"}
       />
     </div>
   );
