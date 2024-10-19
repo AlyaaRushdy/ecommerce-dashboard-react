@@ -18,6 +18,7 @@ import { Toaster } from "./components/ui/toaster";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EditCategory from "./pages/EditCategory";
 import AddPromotion from "./pages/AddPromotions";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -146,6 +147,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+      <Route
+            path="/contact"
+            element={
+              <ProtectedRoute>
+                <Contact />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </main>
       <Toaster />
