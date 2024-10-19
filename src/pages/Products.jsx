@@ -1,25 +1,44 @@
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
 import Header from "../components/shared/Header";
-import { BellRing } from "lucide-react";
 import DataTable from "@/components/shared/DataTable";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import productsColumns from "@/data table columns/productsColumns";
-
 export default function CardWithForm() {
+<<<<<<< HEAD
+	const [products, setProducts] = useState([]);
+
+	const getProductsFromApi = async () => {
+		try {
+			const getProducts = await axios.get("http://localhost:5000/products/");
+			setProducts(getProducts.data.products);
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
+	useEffect(() => {
+		getProductsFromApi();
+	}, []);
+
+	return (
+		<main className="p-5">
+			<Header currentPage={"Producst"} />
+
+			{/* start table */}
+
+			<div>
+				<DataTable
+					columns={productsColumns()}
+					data={products}
+					tableTitle={"All Products"}
+					ButtonLink={"/products/addProduct"}
+					ButtonText={"Add Product"}
+				/>
+			</div>
+		</main>
+	);
+=======
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -164,4 +183,5 @@ export default function CardWithForm() {
       </div>
     </main>
   );
+>>>>>>> 6942ad3067b599ab2bbbf0e636f27da24f4a3f67
 }

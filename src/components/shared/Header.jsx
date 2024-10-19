@@ -53,13 +53,20 @@ function Header({ currentPage, prevPage, prevPageLink }) {
               <span className="sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
+
             <DropdownMenuItem>
               <Link to={"/settings"}> Settings</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+
+
+            <DropdownMenuItem>
+              <Link to={"/contact"}> Contact</Link>
+            </DropdownMenuItem>
+            
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <button
