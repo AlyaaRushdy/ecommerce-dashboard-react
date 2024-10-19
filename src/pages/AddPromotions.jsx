@@ -19,11 +19,11 @@ const PromotionSchema = z
         message: "Discount cannot be less than 0.01.",
       }),
     "Discount Status": z.enum(["active", "pending", "expired"]).optional(),
-    "Start Date": z.string.date({
+    "Start Date": z.date({
       required_error: "Start date is required",
       invalid_type_error: "That's not a valid date!",
     }),
-    "End Date": z.string.date({
+    "End Date": z.date({
       required_error: "End date is required",
       invalid_type_error: "That's not a valid date!",
     }),
