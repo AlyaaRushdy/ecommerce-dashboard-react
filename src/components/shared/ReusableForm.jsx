@@ -62,7 +62,7 @@ export function ReusableForm({
   const handleSubmit = async (data) => {
     try {
       console.log("Form Values: ", form.getValues());
-      if (pageTitle == "Add Admin") {
+      if (pageTitle == "Add Admin" || pageTitle == "Add Promotion") {
         await onSubmit(data);
       } else {
         const formData = new FormData();
@@ -146,31 +146,31 @@ export function ReusableForm({
         </Select>
       );
     } else if (field instanceof z.ZodDate) {
-      inputComponent = (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={`w-full justify-start text-left font-normal ${
-                !form.getValues(name) && "text-muted-foreground"
-              }`}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {form.getValues(name)
-                ? format(form.getValues(name), "PPP")
-                : `Select ${name}`}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={form.getValues(name)}
-              onSelect={(date) => form.setValue(name, date)}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-      );
+   inputComponent = (
+     <Popover>
+       <PopoverTrigger asChild>
+         <Button
+           variant={"outline"}
+           className={`w-full justify-start text-left font-normal ${
+             !form.getValues(name) && "text-muted-foreground"
+           }`}
+         >
+           <CalendarIcon className="mr-2 h-4 w-4" />
+           {form.getValues(name)
+             ? format(form.getValues(name), "PPP")
+             : `Select ${name}`}
+         </Button>
+       </PopoverTrigger>
+       <PopoverContent className="w-auto p-0" align="start">
+         <Calendar
+           mode="single"
+           selected={form.getValues(name)}
+           onSelect={(date) => form.setValue(name, date)}
+           initialFocus
+         />
+       </PopoverContent>
+     </Popover>
+   );
     } else {
       inputComponent = (
         <Input placeholder={`Enter ${name}`} {...form.register(name)} />
