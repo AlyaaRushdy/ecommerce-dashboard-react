@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Header from "@/components/shared/Header";
@@ -21,7 +20,6 @@ function OrderDetails() {
     }, [id]);
 
     const fixImagePath = (imagePath) => {
-
         return imagePath.replace(
             "E:\\DEPI\\FinalProject backend\\ecommerce-dashboard-backend\\images\\", 
             "http://localhost:5000/images/"
@@ -37,8 +35,8 @@ function OrderDetails() {
             <div className="p-5">
                 <Header currentPage={` ${id}`} prevPage={"Orders"} prevPageLink={"/orders"} />
 
-                <div className="py-4 gap-5">
-                    {orderDetails.products.map((product) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 py-4">
+                    {orderDetails.products.slice(0, 3).map((product) => (
                         <Card key={product.productId} className="flex flex-col mb-4">
                             <CardContent className="flex flex-col items-center p-4">
                                 <img
@@ -46,20 +44,16 @@ function OrderDetails() {
                                     alt={product.title}
                                     className="mb-2 w-full h-auto max-w-[200px] md:max-w-[250px]"
                                 />
-                                <div className="text-center">
-                                    <h2 className="text-lg font-bold">{product.title}</h2>
-                                    <p className="text-sm mb-1"><strong className="text-orange-700 text-base">SKU : </strong> {product.sku}</p>
-                                    <p className="text-sm mb-1"><strong className="text-orange-700 text-base">Quantity :</strong> {product.quantity}</p>
-                                    <p className="text-sm mb-1"><strong className="text-orange-700 text-base">Total Price : </strong>{orderDetails.totalPrice || 'NAN'}</p>
-                                    <p className="text-sm mb-1"><strong className="text-orange-700 text-base">Order Date :</strong> {new Date(orderDetails.createdAt).toLocaleDateString()}</p>
-                                    <p className="text-sm mb-1"><strong className="text-orange-700 text-base">Status :</strong> {orderDetails.status}</p>
+                                <div className="text-left">
+                                    <h2 className="text-lg font-bold m-2">{product.title}</h2>
+                                    <p className="text-sm mb-1.5"><strong className="text-orange-700 text-base">SKU : </strong> {product.sku}</p>
+                                    <p className="text-sm mb-1.5"><strong className="text-orange-700 text-base">Quantity :</strong> {product.quantity}</p>
+                                    <p className="text-sm mb-1.5"><strong className="text-orange-700 text-base">Total Price : </strong>{orderDetails.totalPrice || 'NAN'}</p>
+                                    <p className="text-sm mb-1.5"><strong className="text-orange-700 text-base">Order Date :</strong> {new Date(orderDetails.createdAt).toLocaleDateString()}</p>
+                                    <p className="text-sm mb-1.5"><strong className="text-orange-700 text-base">Status :</strong> {orderDetails.status}</p>
                                 </div>
                             </CardContent>
-
-                            <CardFooter className="flex justify-center">
-                                <p className="text-sm"><strong className="text-orange-700 text-base">Order ID :</strong> {orderDetails.id}</p>
-                            </CardFooter>
-                        </Card>
+                               </Card>
                     ))}
                 </div>
             </div>
