@@ -1,28 +1,24 @@
-import TableOrderButton from "@/components/tableOrderButton";
 import { Button } from "@/components/ui/button";
-import { Trash2, ChevronsUpDown, PencilLine } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import TableOrderButton from "@/components/tableOrderButton";
 
+// function for CSS class based on the order status
 const getStatusClass = (status) => {
   switch (status) {
-    case "under testing":
-      // return "text-yellow-500";
-      return "text-white bg-yellow-500 rounded-full px-2 py-0.5 text-sm";
-    case "delivered":
-      // return "text-green-500";
-      return "text-white bg-green-500 rounded-full px-2 py-0.5 text-sm";
-    case "canceled":
-      // return "text-red-500";
-      return "text-white bg-red-500 rounded-full px-2 py-0.5 text-sm";
+    case "Under testing":
+      return "text-yellow-600";
+    case "Completed":
+      return "text-green-600";
     case "Shipping":
-      // return "text-blue-500";
-      return "text-white bg-blue-500 rounded-full px-2 py-0.5 text-sm";
+      return "text-blue-600";
     default:
       return "";
   }
 };
 
-export const orderColumns = [
+// Define  order columns
+export const customerOrdersColumns = [
   {
     accessorKey: "id",
     header: ({ column }) => {
@@ -42,6 +38,7 @@ export const orderColumns = [
       return <Link to={`/orders/${id}`}>{id}</Link>;
     },
   },
+
   {
     accessorKey: "products",
     header: ({ column }) => {
@@ -54,12 +51,11 @@ export const orderColumns = [
       );
     },
   },
+
   {
     accessorKey: "quantity",
-    // header: ({ column }) => {
-    //   return <TableOrderButton column={column} text={"Quantity"} />;
-    // },
     header: "Quantity",
+
     cell: ({ row }) => {
       const productsArray = row.getValue("products");
       const totalQuantity = productsArray.reduce((prev, curr) => {
@@ -69,6 +65,7 @@ export const orderColumns = [
       return <div className="font-medium">{totalQuantity + " Items"}</div>;
     },
   },
+
   {
     accessorKey: "createdAt",
     header: ({ column }) => {
@@ -82,46 +79,19 @@ export const orderColumns = [
     enableGlobalFilter: false,
   },
   {
-    accessorKey: `city`,
-    header: ({ column }) => {
-      return <TableOrderButton column={column} text={"City"} />;
-    },
-  },
-  {
     accessorKey: "status",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Status"} />;
     },
     cell: ({ row }) => {
+      const status = row.original.status;
       return (
-        <>
-          <div className="text-center">
-            <span className={getStatusClass(row.original.status)}>
-              {row.original.status}
-            </span>
-          </div>
-        </>
+        <div className="flex items-center">
+          <span className={getStatusClass(status)}>{status}</span>
+        </div>
       );
     },
   },
-  // {
-  //   accessorKey: "quantity",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"Quantity"} />;
-  //   },
-  //   cell: ({ row }) => {
-  //     const qty = row.getValue("quantity");
-  //     return <div className="text-center">{qty}</div>;
-  //   },
-  //   enableGlobalFilter: false,
-  // },
-
-  // {
-  //   accessorKey: "city",
-  //   header: ({ column }) => {
-  //     return <TableOrderButton column={column} text={"City"} />;
-  //   },
-  // },
 
   {
     accessorKey: "totalPrice",
@@ -139,25 +109,11 @@ export const orderColumns = [
     },
     enableGlobalFilter: false,
   },
+
   {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: () => {
-      // const rowData = row.original;
-      return (
-        <div className="flex gap-4">
-          <Link to={`/orders`}>
-            <PencilLine
-              className="inline-block text-muted-foreground"
-              size={20}
-            />
-          </Link>
-          <Link to={"/"}>
-            <Trash2 className="inline-block text-muted-foreground" size={20} />
-          </Link>
-        </div>
-      );
+    accessorKey: "city",
+    header: ({ column }) => {
+      return <TableOrderButton column={column} text={"City"} />;
     },
-    enableGlobalFilter: false,
   },
 ];

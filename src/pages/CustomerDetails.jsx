@@ -27,7 +27,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import DataTable from "@/components/shared/DataTable";
-import { orderColumns } from "@/data table columns/customerOrdersColumns";
+import { customerOrdersColumns } from "@/data table columns/customerOrdersColumns";
 import Header from "@/components/shared/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -154,35 +154,37 @@ function CustomerDetails() {
                   </div>
                 </div>
                 <Separator className="mb-2" />
-                <CustomerInfo title={"Phone Number"} value={customer.phone}>
-                  <Smartphone className="text-muted-foreground w-5" />
-                </CustomerInfo>
-                <CustomerInfo
-                  title={"Signup Date"}
-                  value={new Date(customer.createdAt).toDateString()}
-                >
-                  <UserPlus className="text-muted-foreground w-5" />
-                </CustomerInfo>
-                <CustomerInfo
-                  title={"Last Login date"}
-                  value={customer.lastLoginDate ? customer.lastLoginDate : "-"}
-                >
-                  <LogIn className="text-muted-foreground w-5" />
-                </CustomerInfo>
-                <CustomerInfo
-                  title={"Address"}
-                  value={
-                    "123 Nile Avenue, Apartment 4B, Zamalek District, Cairo, Egypt"
-                  }
-                >
-                  <MapPin className="text-muted-foreground w-5" />
-                </CustomerInfo>
-                <CustomerInfo
-                  title={"Payment Method"}
-                  value={"Cash on Deliveryt"}
-                >
-                  <Banknote className="text-muted-foreground w-5" />
-                </CustomerInfo>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 sm:gap-y-4 lg:gap-y-2 gap-x-6">
+                  <CustomerInfo title={"Phone Number"} value={customer.phone}>
+                    <Smartphone className="text-muted-foreground w-5" />
+                  </CustomerInfo>
+                  <CustomerInfo
+                    title={"Signup Date"}
+                    value={new Date(customer.createdAt).toDateString()}
+                  >
+                    <UserPlus className="text-muted-foreground w-5" />
+                  </CustomerInfo>
+                  <CustomerInfo
+                    title={"Last Login date"}
+                    value={
+                      customer.lastLoginDate ? customer.lastLoginDate : "-"
+                    }
+                  >
+                    <LogIn className="text-muted-foreground w-5" />
+                  </CustomerInfo>
+                  <CustomerInfo
+                    title={"Account Status"}
+                    value={customer.accountStatus}
+                  >
+                    <MapPin className="text-muted-foreground w-5" />
+                  </CustomerInfo>
+                  <CustomerInfo
+                    title={"Payment Method"}
+                    value={"Cash on Delivery"}
+                  >
+                    <Banknote className="text-muted-foreground w-5" />
+                  </CustomerInfo>
+                </div>
               </CardContent>
             </Card>
 
@@ -240,7 +242,7 @@ function CustomerDetails() {
 
           <DataTable
             data={customerOrders}
-            columns={orderColumns}
+            columns={customerOrdersColumns}
             tableTitle={"Orders"}
           />
         </div>
