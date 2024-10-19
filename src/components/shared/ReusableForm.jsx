@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -53,7 +54,6 @@ export function ReusableForm({
 
   const schemaShape = getSchemaShape(schema);
 
-
   const form = useForm({
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: defaultValues || {},
@@ -62,24 +62,27 @@ export function ReusableForm({
   const handleSubmit = async (data) => {
     try {
       console.log("Form Values: ", form.getValues());
+      if (pageTitle == "Add Admin") {
+        await onSubmit(data);
+      } else {
+        const formData = new FormData();
 
-      const formData = new FormData();
+        // Append form fields to FormData
+        Object.entries(data).forEach(([key, value]) => {
+          if (value instanceof Date) {
+            formData.append(key, format(value, "yyyy-MM-dd"));
+          } else {
+            formData.append(key, value);
+          }
+        });
+        console.log([...formData.entries()]);
+        // Append files to FormData if available
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
 
-      // Append form fields to FormData
-      Object.entries(data).forEach(([key, value]) => {
-        if (value instanceof Date) {
-          formData.append(key, format(value, "yyyy-MM-dd"));
-        } else {
-          formData.append(key, value);
-        }
-      });
-      console.log([...formData.entries()]);
-      // Append files to FormData if available
-      files.forEach((file) => {
-        formData.append("files", file);
-      });
-
-      await onSubmit(formData);
+        await onSubmit(formData);
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
