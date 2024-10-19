@@ -9,18 +9,13 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "../ui/sheet";
+import ChangePassword from "@/components/ChangePassword";
 
 const AccountSettings = () => {
   const [email, setEmail] = useState("email@gmail.com");
-  const [oldPassword, setOldPassword] = useState("oldpassword123");
-  const [newPassword, setNewPassword] = useState("newpassword123");
+  // const [oldPassword, setOldPassword] = useState("oldpassword123");
+  // const [newPassword, setNewPassword] = useState("newpassword123");
   const [showAlert, setShowAlert] = useState(false);
-
-  const handleChangePassword = (e) => {
-    e.preventDefault();
-    console.log("Old password: ", oldPassword);
-    console.log("New password: ", newPassword);
-  };
 
   const handleSave = () => {
     console.log("New email: ", email);
@@ -73,9 +68,9 @@ const AccountSettings = () => {
       </div>
       <div className="mt-20">
         <h2 className="text-lg font-bold mb-10">Password</h2>
-        <form onSubmit={handleChangePassword} className="space-y-4">
-          {/* Password fields */}
-          <div className="flex flex-col md:flex-row gap-4">
+        {/* <form onSubmit={handleChangePassword} className="space-y-4"> */}
+        {/* Password fields */}
+        {/* <div className="flex flex-col md:flex-row gap-4">
             <Input
               type="password"
               placeholder="Old password"
@@ -92,13 +87,13 @@ const AccountSettings = () => {
               required
               className="w-full md:w-1/2"
             />
-          </div>
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full md:w-auto">
+          </div> */}
+        {/* Submit Button */}
+        {/* <Button type="submit" className="w-full md:w-auto">
             Save Password
           </Button>
-        </form>
+        </form> */}
+        <ChangePassword />
       </div>
       <div className="mt-20">
         <h2 className="text-xl font-bold mb-6">Delete Account</h2>
