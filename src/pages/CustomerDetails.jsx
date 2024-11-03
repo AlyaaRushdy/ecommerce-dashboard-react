@@ -31,7 +31,6 @@ import { customerOrdersColumns } from "@/data table columns/customerOrdersColumn
 import Header from "@/components/shared/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "@/components/shared/loading";
 import CustomerInfo from "@/components/customerInfo";
 
 export const description = "A line chart";
@@ -70,15 +69,14 @@ function CustomerDetails() {
 
     axios
       .get(`http://localhost:5000/orders/user/${customerId}`)
+      .then((res) => res.data)
       .then((res) => {
-        if (res.status === 404) {
-          setCustomerOrders([]);
-        } else {
-          setCustomerOrders(res.data.results);
-        }
+        setCustomerOrders(res.data.results);
       })
       .catch((err) => {
-        console.log(err.response);
+        if (err.response.status === 404) {
+          setCustomerOrders([]);
+        } else console.log(err.response);
       });
   }, [customerId]);
 
@@ -94,10 +92,7 @@ function CustomerDetails() {
 
   return (
     <>
-      {Object.keys(customer).length === 0 &&
-      Object.keys(customerOrders).length === 0 ? (
-        <Loading />
-      ) : (
+      {Object.keys(customer).length > 0 && (
         <div className="p-5">
           <Header
             currentPage={`${customer.fname} ${customer.lname}`}
