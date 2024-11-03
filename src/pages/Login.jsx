@@ -93,6 +93,8 @@ function Login() {
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
             Enter your email below to login to your account.
+            <p className="text-foreground">Test Email: johndoe@example.com </p>
+            <p className="text-foreground"> Test Password: 12345678</p>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -135,7 +137,7 @@ function Login() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Login</Button>
             </form>
           </Form>
         </CardContent>
