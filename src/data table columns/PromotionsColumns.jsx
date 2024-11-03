@@ -26,12 +26,22 @@ const promotionsCoulmns = (handleDeleteCoupon, handleEditCoupon) => [
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"Start Date"} />;
     },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("startDate"));
+      return <div className="font-medium">{date.toDateString()}</div>;
+    },
+    sortingFn: "datetime",
   },
   {
     accessorKey: "endDate",
     header: ({ column }) => {
       return <TableOrderButton column={column} text={"End Date"} />;
     },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("endDate"));
+      return <div className="font-medium">{date.toDateString()}</div>;
+    },
+    sortingFn: "datetime",
   },
   {
     accessorKey: "type",
