@@ -18,7 +18,6 @@ const PromotionSchema = z
       .min(0.01, {
         message: "Discount cannot be less than 0.01.",
       }),
-    "Discount Status": z.enum(["active", "pending", "expired"]).optional(),
     startDate: z.date({
       required_error: "Start date is required",
       invalid_type_error: "That's not a valid date!",
@@ -78,7 +77,6 @@ export default function AddPromotion() {
           defaultValues={{
             name: "",
             discount: 0,
-            "Discount Status": "pending",
             startDate: new Date(),
             endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
           }}
