@@ -20,154 +20,48 @@ import EditCategory from "./pages/EditCategory";
 import AddPromotion from "./pages/AddPromotions";
 import Contact from "./pages/Contact";
 import AddAdmin from "./pages/AddAdmin";
+import ShippingCosts from "./pages/ShippingCosts";
+
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/products", element: <Products /> },
+  { path: "/products/:id", element: <SingleProduct /> },
+  { path: "/categories", element: <Categories /> },
+  { path: "/categories/create", element: <AddCategory /> },
+  { path: "/categories/edit/:id", element: <EditCategory /> },
+  { path: "/orders", element: <Orders /> },
+  { path: "/orders/:id", element: <OrderDetails /> },
+  { path: "/customers", element: <Customers /> },
+  { path: "/customers/:customerId", element: <CustomerDetails /> },
+  { path: "/reports", element: <Reports /> },
+  { path: "/promotions", element: <Promotions /> },
+  { path: "/promotions/addPromotion", element: <AddPromotion /> },
+  { path: "/settings", element: <Settings /> },
+  { path: "/settings/addAdmin", element: <AddAdmin /> },
+  { path: "/contact", element: <Contact /> },
+  { path: "*", element: <ErrorPage /> },
+];
 
 function App() {
   return (
     <>
       <Sidebar />
-      <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto bg-gray-100 dark:bg-background min-h-screen">
+      <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto  min-h-screen">
         <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/products"
-            element={
-              <ProtectedRoute>
-                <Products />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/products/:id"
-            element={
-              <ProtectedRoute>
-                <SingleProduct />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/categories"
-            element={
-              <ProtectedRoute>
-                <Categories />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/categories/create"
-            element={
-              <ProtectedRoute>
-                <AddCategory />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/categories/edit/:id"
-            element={
-              <ProtectedRoute>
-                <EditCategory />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/orders"
-            element={
-              <ProtectedRoute>
-                <Orders />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/orders/:id"
-            element={
-              <ProtectedRoute>
-                <OrderDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/customers"
-            element={
-              <ProtectedRoute>
-                <Customers />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/customers/:customerId"
-            element={
-              <ProtectedRoute>
-                <CustomerDetails />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/reports"
-            element={
-              <ProtectedRoute>
-                <Reports />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/promotions"
-            element={
-              <ProtectedRoute>
-                <Promotions />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/promotions/addPromotion"
-            element={
-              <ProtectedRoute>
-                <AddPromotion />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings/addAdmin"
-            element={
-              <ProtectedRoute>
-                <AddAdmin />
-              </ProtectedRoute>
-            }
-          />
+          {routes.map((route, i) => {
+            return (
+              <Route
+                path={route.path}
+                element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+                key={i}
+              />
+            );
+          })}
           <Route path="/login" element={<Login />} />
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <ErrorPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/contact"
-            element={
-              <ProtectedRoute>
-                <Contact />
-              </ProtectedRoute>
-            }
-          />
         </Routes>
       </main>
       <Toaster />
+      <Route path="/shippingCosts" element={<ShippingCosts />} />
     </>
   );
 }
