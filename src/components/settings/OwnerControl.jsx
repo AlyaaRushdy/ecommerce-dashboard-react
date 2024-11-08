@@ -3,11 +3,13 @@ import DataTable from "../shared/DataTable";
 import { adminsColumns } from "@/data table columns/AdminsColumns";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
 
 const OwnerControl = () => {
   const [admins, setAdmins] = useState([]);
   const [refresh, setRefresh] = useState(true);
   const { token } = useSelector((state) => state.user);
+  const { toast } = useToast();
 
   useEffect(() => {
     axios
@@ -31,7 +33,12 @@ const OwnerControl = () => {
         setRefresh(!refresh);
       })
       .catch((err) => {
-        console.log(err.response);
+        if (err.response.status == 403) {
+          toast({
+            variant: "destructive",
+            title: err.response.data.message,
+          });
+        } else console.log(err.response);
       });
   };
 
