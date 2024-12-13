@@ -48,20 +48,18 @@ function App() {
       <Sidebar />
       <main className="w-full sm:w-[calc(100%-6rem)] md:w-[calc(100%-7rem)] ml-auto  min-h-screen">
         <Routes>
-          {routes.map((route, i) => {
-            return (
-              <Route
-                path={route.path}
-                element={<ProtectedRoute>{route.element}</ProtectedRoute>}
-                key={i}
-              />
-            );
-          })}
+          {routes.map((route, i) => (
+            <Route
+              path={route.path}
+              element={<ProtectedRoute>{route.element}</ProtectedRoute>}
+              key={i}
+            />
+          ))}
+          <Route path="/shippingCosts" element={<ShippingCosts />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </main>
       <Toaster />
-      <Route path="/shippingCosts" element={<ShippingCosts />} />
     </>
   );
 }
