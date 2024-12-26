@@ -22,7 +22,7 @@ export default function CardWithForm() {
 
 	return (
 		<main className="p-5">
-			<Header currentPage={"Producst"} />
+			<Header currentPage={"Products"} />
 
 			{/* start table */}
 
