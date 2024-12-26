@@ -42,7 +42,7 @@ function OrderDetails() {
                                 <img
                                     src={fixImagePath(product.images)}
                                     alt={product.title}
-                                    className="mb-2 w-full h-auto max-w-[200px] md:max-w-[250px]"
+                                    className="mb-2 w-full h-auto max-w-[250px] md:max-w-[250px]"
                                 />
                                 <div className="text-left">
                                     <h2 className="text-lg font-bold m-2">{product.title}</h2>
